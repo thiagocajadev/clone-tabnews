@@ -99,7 +99,7 @@ Aqui vamos preparar a stack de desenvolvimento, empilhando as aplicações sobre
 3. Torne a rota publica para acesso externo.
     No terminal, clique na aba Portas, botão direito em Visibilidade -> Visibilidade da porta -> Public.
 
-# Salvando o projeto no GitHub
+# 💾 Salvando o projeto no GitHub
 
 1. Crie um arquivo chamado .gitignore. Aqui vamos informar arquivos e pastas para não ficarem no controle de versão.
 
@@ -118,3 +118,22 @@ Aqui vamos preparar a stack de desenvolvimento, empilhando as aplicações sobre
 7. Use o **git commit --amend --no-edit** caso tenha esquecido algum arquivo, mantendo a mensagem anterior e adicionando apenas as alterações que faltaram.
 
 8. Caso use o **git log**, vc irá paginar o log com alterações. Pressione **q** pra sair e voltar ao terminal.
+
+## 🧠 Comandos Git Essenciais
+
+```bash
+touch .gitignore                                # Cria o arquivo .gitignore
+git add .gitignore                              # Adiciona o .gitignore ao rastreamento
+git status                                      # Mostra o status atual do repositório
+git add nome-do-arquivo                         # Adiciona um arquivo específico
+git add .                                       # Adiciona todas as alterações
+git commit -m "Mensagem"                        # Cria um commit com mensagem
+git commit -m 'adiciona arquivo `.minhaconfig`' # Destaca o arquivo no commit
+git commit --amend --no-edit                    # Emenda o último commit sem alterar a mensagem
+git push                                        # Envia as alterações ao GitHub
+git push --force                                # Envia as alterações ao GitHub, forçando em caso de divergência
+git pull                                        # Baixa e aplica as alterações do GitHub
+git rm nome-do-arquivo                          # Remove o arquivo do Git e do disco
+git rm --cached nome-do-arquivo                 # Remove o arquivo do Git, mas mantém no disco
+git log                                         # Exibe o histórico de commits (pressione 'q' para sair)
+```
