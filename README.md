@@ -116,3 +116,5 @@ Aqui vamos preparar a stack de desenvolvimento, empilhando as aplicações sobre
 6. Use o **git add** para adicionar as demais dependências.
 
 7. Use o **git commit --amend --no-edit** caso tenha esquecido algum arquivo, mantendo a mensagem anterior e adicionando apenas as alterações que faltaram.
+
+8. Caso use o **git log**, vc irá paginar o log com alterações. Pressione **q** pra sair e voltar ao terminal.
