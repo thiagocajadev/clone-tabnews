@@ -2,11 +2,11 @@ Olá Dev!
 
 Esse projeto é voltado para estudos com base no [curso.dev](https://curso.dev).🌱
 
-# Preparando o ambiente
+# 📚 Preparando o ambiente
 
 Aqui vamos preparar a stack de desenvolvimento, empilhando as aplicações sobre o Node, sendo assim:
 
-- Node.js LTS Hydrogen 
+- Node.js 18.20.8 LTS Hydrogen 
 - Next.js 13.1.6
 - React.js 18.2.0
 - React-dom 18.2.0
@@ -14,26 +14,26 @@ Aqui vamos preparar a stack de desenvolvimento, empilhando as aplicações sobre
 
 1. Aplique os comandos no terminal para configurar as versões do framework e demais dependências:
 
-    ``` code
-        // Checa versão atual do Node no Codespaces.
-        node -v
+    ```bash
+    # Checa versão atual do Node no Codespaces.
+    node -v
 
-        // Verifica as versões disponíveis pra instalação com o gerenciador de pacotes do Node, o NVM.
-        nvm ls
+    # Verifica as versões disponíveis pra instalação com o gerenciador de pacotes do Node, o NVM.
+    nvm ls
 
-        // Instalar versão com suporte extendido (LTS).
-        nvm install lts/hydrogen
+    # Instala versão com suporte extendido (LTS).
+    nvm install lts/hydrogen
 
-        // Configurar para sempre iniciar com a versão LTS
-        nvm alias default lts/hydrogen
+    # Configura para sempre iniciar com a versão LTS.
+    nvm alias default lts/hydrogen
     ```
 
 2. Crie o arquivo .nvmrc:
 
     O RC no final significa Run Commands. É uma convensão para execução de scripts e instruções de inicialização.
 
-    ```code
-    // Adicione a instrução para usar a versão instalada
+    ```bash
+    # Adicione a instrução para usar a versão instalada.
     lts/hydrogen
     ```
 
@@ -41,28 +41,28 @@ Aqui vamos preparar a stack de desenvolvimento, empilhando as aplicações sobre
 
 3. Instale o Next.js
 
-    ```code
-    // Use o gerenciador de pacotes do Node para configurar e preparar a instalação do Next.js. Será criado o arquivo package.json com as configurações.
+    ```bash
+    # Use o gerenciador de pacotes do Node para configurar e preparar a instalação do Next.js. Será criado o arquivo package.json com as configurações.
     npm init
 
-    // Instale o Next.js. Todas as depencias do projeto serão incluidas no package.json
+    # Instale o Next.js. Todas as depencias do projeto serão incluidas no package.json.
     npm install next@13.1.6
     ```
 
 4. Instale o React.js
-    ```code
-    // O react será o frontend, vamos criar as telas da aplicação nele.
-    // Instalamos primeiro o Core
+    ```bash
+    # O react será o frontend, vamos criar as telas da aplicação nele.
+    # Instalamos primeiro o Core.
     npm install react@18.2.0
 
-    // Agora instalamos o módulo específico para Html
+    # Agora instalamos o módulo específico para Html.
     npm install react-dom@18.2.0
     ```
 
 5. Configure o servidor web para rodar a aplicação.
     Altere o package.json para execução, ele ficará igual o abaixo:
 
-    ```code
+    ```js
     {
         "name": "clone-tabnews",
         "version": "1.0.0",
@@ -80,14 +80,14 @@ Aqui vamos preparar a stack de desenvolvimento, empilhando as aplicações sobre
         }
     }
     ```
-    Para executar no terminal use **npm run dev**
+    Para executar no terminal use **npm run dev**.
 
-# Criando Paginas
+## 📄 Criando Páginas
 
 1. Crie na pasta **pages** no projeto. Essa pasta será lida pelo Next para encontrar as paginas.
 
-2. Crie um arquivo dentro da pasta chamado index.js. Essa será a rota para Home.
-    ```code
+2. Crie um arquivo dentro da pasta chamado **index.js**. Essa será a rota para Home.
+    ```js
     // Dentro das paginas criamos funções para renderizar os conteúdos e exportamos a função padrão.
     function Home(){
         return <h1>Teste</h1>
@@ -99,7 +99,7 @@ Aqui vamos preparar a stack de desenvolvimento, empilhando as aplicações sobre
 3. Torne a rota publica para acesso externo.
     No terminal, clique na aba Portas, botão direito em Visibilidade -> Visibilidade da porta -> Public.
 
-# 💾 Salvando o projeto no GitHub
+## 💾 Salvando o projeto no GitHub
 
 1. Crie um arquivo chamado .gitignore. Aqui vamos informar arquivos e pastas para não ficarem no controle de versão.
 
@@ -119,14 +119,14 @@ Aqui vamos preparar a stack de desenvolvimento, empilhando as aplicações sobre
 
 8. Caso use o **git log**, vc irá paginar o log com alterações. Pressione **q** pra sair e voltar ao terminal.
 
-## 🧠 Comandos Git Essenciais
+### 🧠 Comandos Git Essenciais
 
 ```bash
 touch .gitignore                                # Cria o arquivo .gitignore
 git add .gitignore                              # Adiciona o .gitignore ao rastreamento
 git status                                      # Mostra o status atual do repositório
 git add nome-do-arquivo                         # Adiciona um arquivo específico
-git add .                                       # Adiciona todas as alterações
+git add -A                                      # Adiciona todas as alterações e exclusões
 git commit -m "Mensagem"                        # Cria um commit com mensagem
 git commit -m 'adiciona arquivo `.minhaconfig`' # Destaca o arquivo no commit
 git commit --amend --no-edit                    # Emenda o último commit sem alterar a mensagem
