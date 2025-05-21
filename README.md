@@ -17,3 +17,4 @@ A stack utiliza tecnologias amplamente adotadas no ecossistema JavaScript, facil
 
 # 🔗 Documentação
 - [Preparando o ambiente](docs/preparando-o-ambiente.md)
+- [Publição contínua](docs/deploy-continuo.md)
