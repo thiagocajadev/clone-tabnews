@@ -31,6 +31,8 @@ Siga o fluxo : Início, Progresso e Conclusão. Abaixo exemplo da organização 
 
 ![Milestones e Issues](img/milestones-e-issues.png)
 
+Obs: **CTN-XXX** significa **C**lone **T**ab **N**ews - Numero sequencial da tarefa.
+
 É isso!
 
 ## 👨🏻‍💻 Code Styles
@@ -43,6 +45,10 @@ Isso facilita a manutenção e integração da equipe.
 
 Para criar sub-tarefas dentro da issue, use traços e colchetes assim:
 
+```powershell
+# - [ ] tarefa1
+# - [ ] tarefa2
+```
 - [ ] tarefa1
 - [ ] tarefa2
 
@@ -51,3 +57,18 @@ Para criar sub-tarefas dentro da issue, use traços e colchetes assim:
 Assim fica muito fácil de atualizar os status!
 
 Habilite a sincronização do editor no GitHub com sua conta do VSCode.
+
+### 📝 Padronizando com EditorConfig
+
+Crie um arquivo na raiz do projeto chamado **.editorconfig**. Adicione as seguintes linhas
+
+```bash
+root = true // Delimita a aplicação da configuração ao diretório.
+
+[*] // Aplica em todas as linguagens. Pode ser delimitado com [*.{js,cs}]. No caso Csharp e javascript
+
+indent_style = space
+indent_size = 2
+```
+
+Instale a extensão do [EditorConfig](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig).
