@@ -12,9 +12,10 @@ A stack utiliza tecnologias amplamente adotadas no ecossistema JavaScript, facil
 - **React.js** – Biblioteca principal para a construção da interface do usuário.
 - **React-dom** – Responsável por renderizar os componentes React no DOM.
 - **Vercel** – Plataforma de hospedagem utilizada para deploy contínuo com integração nativa ao Next.js.
-- **Git/GitHub** - Controle de versão do projeto
+- **Git/GitHub** – Controle de versão do projeto
 
 
 # 🔗 Documentação
 - [Preparando o ambiente](docs/preparando-o-ambiente.md)
 - [Publição contínua](docs/deploy-continuo.md)
+- [Organizando o projeto](docs/organizando-o-projeto.md)
