@@ -10,14 +10,14 @@ Aqui vamos preparar a stack de desenvolvimento, empilhando as aplicações sobre
 
 1. Aplique os comandos no terminal para configurar as versões do framework e demais dependências:
 
-    ```bash
+    ```powershell
     # Checa versão atual do Node no Codespaces.
     node -v
 
     # Verifica as versões disponíveis pra instalação com o gerenciador de pacotes do Node, o NVM.
     nvm ls
 
-    # Instala versão com suporte extendido (LTS).
+    # Instala versão com suporte estendido (LTS).
     nvm install lts/hydrogen
 
     # Configura para sempre iniciar com a versão LTS.
@@ -26,9 +26,9 @@ Aqui vamos preparar a stack de desenvolvimento, empilhando as aplicações sobre
 
 2. Crie o arquivo .nvmrc:
 
-    O RC no final significa Run Commands. É uma convensão para execução de scripts e instruções de inicialização.
+    O RC no final significa Run Commands. É uma convenção para execução de scripts e instruções de inicialização.
 
-    ```bash
+    ```powershell
     # Adicione a instrução para usar a versão instalada.
     lts/hydrogen
     ```
@@ -37,16 +37,16 @@ Aqui vamos preparar a stack de desenvolvimento, empilhando as aplicações sobre
 
 3. Instale o Next.js
 
-    ```bash
+    ```powershell
     # Use o gerenciador de pacotes do Node para configurar e preparar a instalação do Next.js. Será criado o arquivo package.json com as configurações.
     npm init
 
-    # Instale o Next.js. Todas as depencias do projeto serão incluidas no package.json.
+    # Instale o Next.js. Todas as dependências do projeto serão incluídas no package.json.
     npm install next@13.1.6
     ```
 
 4. Instale o React.js
-    ```bash
+    ```powershell
     # O react será o frontend, vamos criar as telas da aplicação nele.
     # Instalamos primeiro o Core.
     npm install react@18.2.0
@@ -117,14 +117,14 @@ Aqui vamos preparar a stack de desenvolvimento, empilhando as aplicações sobre
 
 ### 🧠 Comandos Git Essenciais
 
-```bash
+```powershell
 touch .gitignore                                # Cria o arquivo .gitignore
 git add .gitignore                              # Adiciona o .gitignore ao rastreamento
 git status                                      # Mostra o status atual do repositório
 git add nome-do-arquivo                         # Adiciona um arquivo específico
 git add -A                                      # Adiciona todas as alterações e exclusões
 git commit -m "Mensagem"                        # Cria um commit com mensagem
-git commit -m 'adiciona arquivo `.minhaconfig`' # Destaca o arquivo no commit
+git commit -m 'adiciona arquivo `.minhaConfig`' # Destaca o arquivo no commit
 git commit --amend --no-edit                    # Emenda o último commit sem alterar a mensagem
 git push                                        # Envia as alterações ao GitHub
 git push --force                                # Envia as alterações ao GitHub, forçando em caso de divergência

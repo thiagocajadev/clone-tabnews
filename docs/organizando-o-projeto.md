@@ -4,7 +4,7 @@ Tudo o que fazemos na vida, pode ser feito de uma forma mais efetiva.
 
 Planejamento sobre as tarefas, nos da clareza e organização.
 
-Pra valer a pena algo, pra ter aquela motivação pra realizar algo, o cerebro sempre faz o calculo do SALDO.
+Pra valer a pena algo, pra ter aquela motivação pra realizar algo, o cérebro sempre faz o calculo do SALDO.
 
 Esse SALDO vai nos dizer pra fazer ou não qualquer coisa. Por isso, devemos sair dessa armadilha mental.
 
@@ -21,7 +21,7 @@ A melhor prática é criar uma tarefa inicial ZERO, ou Milestone 0: Em construç
 
 Acesse o repositório do projeto no GitHub, e acesse Issues -> Milestones.
 
-Não da pra acertar tudo ao criar um novo projeto, mas aqui é possível ir trabalhando as idéias que serão revisadas conforme evolução.
+Não da pra acertar tudo ao criar um novo projeto, mas aqui é possível ir trabalhando as ideias que serão revisadas conforme evolução.
 
 Temos que buscar a dopamina aqui. Sim, somos guiados pela dopamina pra jogos, sair com amigos, ir pra festas, igreja, bares, etc.
 
@@ -31,3 +31,23 @@ Siga o fluxo : Início, Progresso e Conclusão. Abaixo exemplo da organização 
 
 ![Milestones e Issues](img/milestones-e-issues.png)
 
+É isso!
+
+## 👨🏻‍💻 Code Styles
+
+A melhor forma de trabalhar sozinho ou equipe é seguir as regras de padronização do estilo de código.
+
+Pular ou não linhas, aspas simples, palavras chaves pulando linhas e usando tabs ou espaços, letras maiúsculas, camelCase, snake_case, PascalCase...
+
+Isso facilita a manutenção e integração da equipe.
+
+Para criar sub-tarefas dentro da issue, use traços e colchetes assim:
+
+- [ ] tarefa1
+- [ ] tarefa2
+
+![Sub-tarefas](img/sub-tarefas.png)
+
+Assim fica muito fácil de atualizar os status!
+
+Habilite a sincronização do editor no GitHub com sua conta do VSCode.
