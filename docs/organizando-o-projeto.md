@@ -10,7 +10,7 @@ Esse SALDO vai nos dizer pra fazer ou não qualquer coisa. Por isso, devemos sai
 
 Organizar é necessário. Quebrar um projeto em tarefas, passando do MACRO para o MICRO, tornando cada pequeno progresso algo viável e massa de se atingir.
 
-Vamos aplicar isso no GitHub, usando os Milestones e Issues. 
+Vamos aplicar isso no GitHub, usando os Milestones e Issues.
 
 ## 🪨 Milestones e Issues
 
@@ -49,6 +49,7 @@ Para criar sub-tarefas dentro da issue, use traços e colchetes assim:
 # - [ ] tarefa1
 # - [ ] tarefa2
 ```
+
 - [ ] tarefa1
 - [ ] tarefa2
 
@@ -72,3 +73,41 @@ indent_size = 2
 ```
 
 Instale a extensão do [EditorConfig](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig).
+
+### 📝 Configurando o Prettier
+
+O Prettier vai deixar a formatação mais bonita, confia!
+
+1. Instale ele via NPM, facilitando a configuração padrão para todos os DEVs do time.
+
+```powershell
+# Instala o Prettier com dependencia apenas para Desenvolvimento. Pode ser usado --save-dev ou -D
+npm install prettier --save-dev
+```
+
+2. No manifesto será criado registro da dependência.
+
+```js
+"devDependencies": {
+  "prettier": "^3.5.3"
+}
+```
+
+3. Crie um novo script pra executar a verificação de formatação (lint) e outro pra executar as alterações, no manifesto package.json
+
+```js
+"scripts": {
+  "dev": "next dev",
+  "lint:check": "prettier --check .",
+  "lint:fix": "prettier --write ."
+}
+// Obs: o pontinho após o --check e --write informa pra executar em todos os arquivos e diretórios desse nível pra frente.
+```
+
+4. Execute no terminal **npm run lint:check**. Caso queria aplicar as formatações recomendadas use **npm run lint:fix**.
+
+5. Finalizando, baixe a extensão do Prettier no editor e configure:
+
+- Acesse Menu -> Configurações. Digite **formatter**. Troque o padrão para **Prettier**.
+- Agora procure por **format on save** e marque a opção.
+- Por fim, desmarque a opção **auto save**. Será útil para execução com testes automatizados.

@@ -6,7 +6,7 @@ CI/CD é a sigla para Integração Contínua (Continuous Integration) e Entrega/
 
 O modelo **Client-Server** se encaixa como a arquitetura típica onde essas mudanças são aplicadas.
 
-No modelo **Client-Server**, o **cliente** (navegador, app, etc.) faz requisições e o **servidor** responde com dados ou serviços. 
+No modelo **Client-Server**, o **cliente** (navegador, app, etc.) faz requisições e o **servidor** responde com dados ou serviços.
 
 ![Cliente Servidor com CI/CD](img/ci-cd-client-server.png)
 
@@ -26,6 +26,6 @@ Vamos usar a Vercel pra hospedar o projeto.
 
 Será gerado link de produção similar a [esse](https://clone-tabnews-steel-kappa.vercel.app/).
 
-A cada nova alteração no projeto, empurrada via **git push**, irá ativar o robô da Vercel. 🤖 
+A cada nova alteração no projeto, empurrada via **git push**, irá ativar o robô da Vercel. 🤖
 
 Ele irá fazer o processo de publicação das atualizações automagicamente. 🪄
