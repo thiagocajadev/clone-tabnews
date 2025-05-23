@@ -81,7 +81,7 @@ O Prettier vai deixar a formatação mais bonita, confia!
 1. Instale ele via NPM, facilitando a configuração padrão para todos os DEVs do time.
 
 ```powershell
-# Instala o Prettier com dependencia apenas para Desenvolvimento. Pode ser usado --save-dev ou -D
+# Instala o Prettier com dependência apenas para Desenvolvimento. Pode ser usado --save-dev ou -D
 npm install prettier --save-dev
 ```
 
@@ -104,9 +104,12 @@ npm install prettier --save-dev
 // Obs: o pontinho após o --check e --write informa pra executar em todos os arquivos e diretórios desse nível pra frente.
 ```
 
-4. Execute no terminal **npm run lint:check**. Caso queria aplicar as formatações recomendadas use **npm run lint:fix**.
+4. Crie um arquivo `.prettierignore`. Adicione o `.next `e demais pastas para que sejam ignorados pelo linter.
+   Obs: Por padrão, o Prettier ja ignora a pasta as pastas `.git` e `node_modules`.
 
-5. Finalizando, baixe a extensão do Prettier no editor e configure:
+5. Execute no terminal **npm run lint:check**. Caso queria aplicar as formatações recomendadas use **npm run lint:fix**.
+
+6. Finalizando, baixe a extensão do Prettier no editor e configure:
 
 - Acesse Menu -> Configurações. Digite **formatter**. Troque o padrão para **Prettier**.
 - Agora procure por **format on save** e marque a opção.
