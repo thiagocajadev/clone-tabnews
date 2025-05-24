@@ -51,18 +51,19 @@ Pra termos mais exemplos aqui, abaixo temos o esquema de consulta de registros:
 
 ![DNS Resumo](img/dns-resumo-1.png)
 
-🧭 Fluxo de consulta DNS (papéis):
-Registrant (Você): A pessoa ou empresa que registra um domínio, como seu-dominio.br.
+### 🧭 Fluxo de consulta DNS (papéis):
 
-Registrar (Ex: Registro.br): A empresa autorizada a vender domínios. Você interage com ela para registrar, renovar e configurar o domínio.
+**Registrant (Você):** A pessoa ou empresa que registra um domínio, como seu-dominio.br.
 
-Registry (Ex: NIC.br): A entidade responsável por manter a base de dados oficial de todos os domínios de um TLD específico (como .br). Ela repassa ao TLD os servidores DNS responsáveis.
+**Registrar (Ex: Registro.br):** A empresa autorizada a vender domínios. Você interage com ela para registrar, renovar e configurar o domínio.
 
-Root Server: É o ponto inicial da busca DNS. Ele aponta para os servidores responsáveis por cada TLD (como .br, .com, etc.).
+**Registry (Ex: NIC.br):** A entidade responsável por manter a base de dados oficial de todos os domínios de um TLD específico (como .br). Ela repassa ao TLD os servidores DNS responsáveis.
 
-TLD Server (Ex: a.auto.dns.br): Servidores que cuidam de domínios de nível superior. Eles informam quais são os servidores autoritativos para domínios como seu-dominio.br.
+**Root Server:** É o ponto inicial da busca DNS. Ele aponta para os servidores responsáveis por cada TLD (como .br, .com, etc.).
 
-Authoritative Server (Ex: DNS da sua hospedagem): Tem a resposta final e correta, como o IP do seu site. Esse servidor resolve o domínio para um endereço IP.
+**TLD Server (Ex: a.auto.dns.br):** Servidores que cuidam de domínios de nível superior. Eles informam quais são os servidores autoritativos para domínios como seu-dominio.br.
+
+**Authoritative Server (Ex: DNS da sua hospedagem):** Tem a resposta final e correta, como o IP do seu site. Esse servidor resolve o domínio para um endereço IP.
 
 Um pouco mais sobre TLD e AS:
 
