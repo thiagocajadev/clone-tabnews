@@ -12,6 +12,7 @@ A stack utiliza tecnologias amplamente adotadas no ecossistema JavaScript, facil
 - **Next.js** – Framework React para aplicações server-side rendering (SSR) e static site generation (SSG).
 - **React.js** – Biblioteca principal para a construção da interface do usuário.
 - **React-dom** – Responsável por renderizar os componentes React no DOM.
+- **Jest** – Ferramenta para realizar testes automatizados.
 - **Vercel** – Plataforma de hospedagem utilizada para deploy contínuo com integração nativa ao Next.js.
 - **Git/GitHub** – Controle de versão do projeto
 
@@ -22,3 +23,4 @@ A stack utiliza tecnologias amplamente adotadas no ecossistema JavaScript, facil
 - [Organizando o projeto](docs/organizando-o-projeto.md)
 - [Resolvendo DNS](docs/resolvendo-dns.md)
 - [Fundação e Arquitetura](docs/fundacao-e-arquitetura.md)
+- [Testes Automatizados](docs/testes-automatizados.md)
