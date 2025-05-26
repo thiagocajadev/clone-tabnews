@@ -34,7 +34,7 @@ Adicione aos scripts no package.json, o uso do `jest` por linha de comando:
 
 Pra executar, utilize `npm run test` ou apenas `npm test`. Se quiser ficar vigiando e testando a cada alteração, use o `npm test:watch`.
 
-## 🏹 Criando testes
+## 🎯 Criando testes
 
 Para identificar arquivos de teste para o Jest, salve com a extensão `.test.js`. Ex: `calculadora.test.js`.
 
@@ -99,3 +99,82 @@ test("espero que 1 seja 1", () => {
 ![Exemplo de teste inválido](img/jest-exemplo-2.png)
 
 Nesse exemplo, o valor recebido foi o **2**, mas o esperado era pra ser o **1**.
+
+### 🧮 Exemplo com calculadora
+
+Só pra abstrair, vamos criar uma model calculadora, criando um método pra somar.
+
+```js
+// calculadoraModel
+function somar(arg1, arg2) {
+  return arg1 + arg2;
+}
+
+// padrão common.js, usado pelo node em projetos legados e pelo Jest
+exports.somar = somar;
+
+// abaixo exemplo para projetos novos
+function somar(arg1, arg2) {
+  return arg1 + arg2;
+}
+
+export { somar };
+
+// outro exemplo de versão resumida para projetos novos
+export function somar(arg1, arg2) {
+  return arg1 + arg2;
+}
+```
+
+agora refatorando o teste:
+
+```js
+// calculadora.test.js
+// importa a model pra dentro do teste
+const calculadora = require("../models/calculadoraModel.js");
+
+test("somar 2 + 2 deve ser 4", () => {
+  const resultado = calculadora.somar(2, 2);
+  expect(resultado).toBe(4);
+});
+```
+
+Esse código vai passar de boa. Mas e se alguém alterar o comportamento do método?
+
+![alteraram o método](img/calculadora-teste-alterando-comportamento-1.png)
+
+O teste irá falhar e indicar a falha. E os testes servem para indicar comportamentos esperados.
+
+Por isso é legal criar diversos cenários a serem testados. Caso alguém altere esse método pra multiplicar, ao invés de somar, irá passar no primeiro teste.
+Ai não será pego e isso seria um CAOS.
+
+Simulando:
+
+```js
+// calculadoraModel
+function somar(arg1, arg2) {
+  return arg1 * arg2; // socorroooooooo!
+}
+```
+
+![multiplica ao invés de somar](img/calculadora-teste-alterando-comportamento-1.png)
+
+Por isso o reforço, crie casos de testes. Abstraindo pro exemplo, um caso para cada operação matemática seria bacana.
+
+Outra simulação, tentando somar string com numero, deve resultar em erro.
+
+![calculadora somando string](img/calculadora-somando-string.png)
+
+Tratando o código:
+
+```js
+function somar(numero1, numero2) {
+  if (typeof numero1 !== "number" || typeof numero2 !== "number") {
+    return "erro";
+  }
+
+  return numero1 + numero2;
+}
+```
+
+Uma boa prática usando TDD (Desenvolvimento Orientados a Testes), é criar os cenários de testes primeiro e, em seguida, ir alterando a aplicação até todos os testes passarem.
