@@ -59,3 +59,42 @@ function status(request, response) {
 // informa que a propriedade é a função de entrada padrão pra esse endpoint
 export default status;
 ```
+
+Use a extensão [JSON Viewer](https://chromewebstore.google.com/detail/json-viewer/gbmdgpbipfallnflgajpaliibnhdgobh) pra visualizar o JSON mais bonito
+
+## Usando CURL - **C**lient **URL**
+
+Essa ferramenta de linha de comando é ótima pra analisar o que acontece na comunicação via HTTP.
+
+Para testar localmente:
+
+```powershell
+# sobe o servidor local
+npm run dev
+
+# usa o Client URL - CURL para fazer uma request ao endpoint
+curl http://localhost:3000/api/status
+```
+
+![cURL - acessando o endpoint](img/curl-acessando-endpoint.png)
+
+Aqui ele fez a request (requisição) e fez o response (retornou a resposta) de forma assim, trazendo o conteúdo do json (objeto javascript). Mais comandos úteis:
+
+```powershell
+# faz a request, requisitando o retorno com todos os dados do cabeçalho http
+curl http://localhost:3000/api/status --verbose
+
+# faz a mesma coisa, com o comando enxuto
+curl http://localhost:3000/api/status -v
+```
+
+![cURL - acessando o endpoint com cabeçalho](img/curl-acessando-endpoint-com-cabecalho.png)
+
+Agora fazendo a requisição com cabeçalho, temos todos os detalhes com o cabeçalho http, mostrando inclusive o charset definido.
+
+Detalhes:
+
+- **Asterisco \*** - cabeçalho do cURL
+- **Seta >** - o que o cURL enviou para o endpoint
+- **Seta <** - o que foi retornado pelo endpoint para o cURL
+- **Entre Chaves {}** - o body (corpo) da resposta no cURL
