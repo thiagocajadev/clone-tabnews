@@ -14,3 +14,8 @@ test("somar 'banana' + 100 deve ser 'erro'", () => {
   const resultado = calculadora.somar("banana", 100);
   expect(resultado).toBe("erro");
 });
+
+test("dividir 4 por 2 deve ser 2", () => {
+  const resultado = calculadora.dividir(4, 2);
+  expect(resultado).toBe(2);
+});
