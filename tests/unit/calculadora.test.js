@@ -1,4 +1,4 @@
-const calculadora = require("../models/calculadoraModel.js");
+const calculadora = require("../../models/calculadoraModel.js");
 
 test("somar 2 + 2 deve ser 4", () => {
   const resultado = calculadora.somar(2, 2);

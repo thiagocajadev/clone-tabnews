@@ -178,3 +178,8 @@ function somar(numero1, numero2) {
 ```
 
 Uma boa prática usando TDD (Desenvolvimento Orientados a Testes), é criar os cenários de testes primeiro e, em seguida, ir alterando a aplicação até todos os testes passarem.
+
+Como o assunto de testes vai se desenrolando ao longo de todo o desenvolvimento, vamos separar aqui 2 coisas:
+
+1. **Testes unitários** - São testes em comportamentos isolados de componentes e métodos puros.
+1. **Testes de integração** - São testes em integração das unidades / camadas da aplicação.
