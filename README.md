@@ -14,7 +14,7 @@ A stack utiliza tecnologias amplamente adotadas no ecossistema JavaScript, facil
 - **React-dom** – Responsável por renderizar os componentes React no DOM.
 - **Jest** – Ferramenta para realizar testes automatizados.
 - **Vercel** – Plataforma de hospedagem utilizada para deploy contínuo com integração nativa ao Next.js.
-- **Git/GitHub** – Controle de versão do projeto
+- **Git/GitHub** – Controle de versão do projeto.
 
 # 🔗 Documentação
 
@@ -25,3 +25,5 @@ A stack utiliza tecnologias amplamente adotadas no ecossistema JavaScript, facil
 - [Fundação e Arquitetura](docs/fundacao-e-arquitetura.md)
 - [Testes Automatizados](docs/testes-automatizados.md)
 - [Criando Endpoints](docs/criando-endpoints.md)
+- [Containers com Docker](docs/docker-containers.md)
+- [Banco de Dados](docs/banco-de-dados.md)

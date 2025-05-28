@@ -37,7 +37,7 @@ Melhorando o exemplo:
 ```js
 function status(request, response) {
   // caso seja acessando o endpoint, o mesmo envia a frase abaixo.
-  // porém esse envio não sabe interpretar qual chartset (teclado de origem), e ai quebra a acentuação e outros caracteres.
+  // porém esse envio não sabe interpretar qual charset (teclado de origem), e ai quebra a acentuação e outros caracteres.
   response.status(200).send("o status está ok!");
 }
 
@@ -62,7 +62,7 @@ export default status;
 
 Use a extensão [JSON Viewer](https://chromewebstore.google.com/detail/json-viewer/gbmdgpbipfallnflgajpaliibnhdgobh) pra visualizar o JSON mais bonito
 
-## Usando CURL - **C**lient **URL**
+## Usando CURL - **Client URL**
 
 Essa ferramenta de linha de comando é ótima pra analisar o que acontece na comunicação via HTTP.
 
