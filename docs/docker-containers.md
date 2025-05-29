@@ -54,10 +54,12 @@ docker compose version
 
 ---
 
-## 📄 Criando o arquivo `docker-compose.yaml`
+## 📄 Criando o arquivo `compose.yaml`
 
 **YAML** — acrônimo recursivo para "YAML Ain’t Markup Language".  
 É um formato legível para humanos, baseado em indentação (sem uso de chaves ou colchetes).
+
+Em versões anteriores, o arquivo compose era chamado de `docker-compose.yaml`.
 
 > Dica: use **espaços** em vez de **tabs** — alguns editores convertem automaticamente.
 
@@ -67,7 +69,7 @@ docker compose version
 services:
   database: ...
   mailcatcher: ...
-  outros-servicos: ...
+  outros-serviços: ...
 ```
 
 ---
@@ -184,7 +186,7 @@ Para parar os containers:
 docker compose down
 ```
 
-Por padrão de organização, o `docker-compose.yaml` pode ficar dentro de uma pasta `infra`. Nesse caso, utilize:
+Por padrão de organização, o `compose.yaml` pode ficar dentro de uma pasta `infra`. Nesse caso, utilize:
 
 ```powershell
 docker compose -f infra/compose.yaml up
