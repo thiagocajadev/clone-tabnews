@@ -1,26 +1,29 @@
-# 🛢️ Banco de dados
+# 🛢️ Banco de Dados
 
-Seguindo as configurações realizadas no Docker, vamos continuar evoluindo a configuração para acesso profissional ao Postgres.
+Seguindo as configurações realizadas no Docker, vamos continuar evoluindo a configuração para um acesso profissional ao PostgreSQL.
 
-## Instalando o pg
+## 📦 Instalando o `pg`
 
-O pg é um client para executar scripts dentro do node para o PostgreSQL
+O `pg` é um client que permite executar comandos e scripts no PostgreSQL via Node.js:
 
-```powershell
+```bash
 npm install pg@8.11.3
 ```
 
-Só um lembrete para subir rápido o ambiente de testes:
+### 🔁 Subindo rapidamente o ambiente de testes
 
-```powershell
-npm run dev # roda o servidor web
-npm run test:watch # roda o jest (agora com watchALL, testando tudo)
-docker compose -f infra/compose.yaml up -d # roda o docker em 2º plano com o BD
+```bash
+npm run dev               # roda o servidor web
+npm run test:watch        # roda o jest (agora com --watchAll, testando tudo, mesmo sem novas alterações)
+docker compose -f infra/compose.yaml up -d  # sobe o docker em segundo plano com o banco de dados
+docker compose -f infra/compose.yaml down  # baixa o docker, encerrando o banco de dados
 ```
 
-## 📜 Preparando o database.js
+---
 
-Vamos seguir o raciocínio usando TDD, importando o módulo database lá no endpoint, pra que ele faça o teste.
+## 📜 Preparando o `database.js`
+
+Vamos seguir o raciocínio usando **TDD**, importando o módulo `database` no endpoint para que o teste nos diga o que falta implementar:
 
 ```js
 // api/v1/status/index.js
@@ -35,25 +38,34 @@ function status(request, response) {
 export default status;
 ```
 
-Nesse ponto, teremos 2 logs no terminal para análise:
+Nesse ponto, teremos **dois logs no terminal para análise**:
 
 ![Erro status code 500](img/erro-interno-cod-500.png)
 
-No log do servidor Web Next - `Module not found`. O arquivo não existe ainda.
-No log de testes do Jest - o status code enviado foi `500`, que representa erro interno no servidor.
+- No log do servidor Web (Next.js): `Module not found` — o arquivo ainda não existe.
+- No log de testes do Jest: status code `500` — representa erro interno no servidor.
 
-Isso ajuda a identificar que o banco de dados está indisponível.
+Esses erros indicam que o banco de dados ainda está indisponível ou não implementado.
 
-Criando o arquivo `database.js` vazio, já passa no teste. Aqui ele retorna um objeto vazio `{}` no log do servidor.
+---
 
-Pra enxergar isso, adicione um `console.log(database)` ao endpoint:
+## 📁 Criando o arquivo `database.js`
+
+Mesmo com um conteúdo vazio, só o fato de o arquivo existir já permite que os testes passem.
+
+```js
+// infra/database.js
+export default {};
+```
+
+Para enxergar o que está sendo importado no endpoint, adicione um `console.log(database)`:
 
 ```js
 // api/v1/status/index.js
 import database from "../../../../infra/database.js";
 
 function status(request, response) {
-  console.log(database);
+  console.log(database); // imprime o que está sendo retornado pelo módulo
   response.status(200).json({
     chave: "o status está ok!",
   });
@@ -62,15 +74,19 @@ function status(request, response) {
 export default status;
 ```
 
-log do servidor web:
+Log do servidor web:
 
-```powershell
+```bash
 wait  - compiling...
 event - compiled successfully in 172 ms (38 modules)
-{} # aqui o objeto vazio
+{} // aqui o objeto ainda está vazio
 ```
 
-Então, vamos adicionar código ao módulo:
+---
+
+## 🧱 Adicionando estrutura ao módulo
+
+Vamos agora começar a estruturar o arquivo, criando a definição de uma função `query`, mesmo que ainda não implementada:
 
 ```js
 // infra/database.js
@@ -78,24 +94,31 @@ export default {
   query: query,
 };
 
-// Aqui só temos a definição dele, ainda precisamos criar a abstração, pra facilitar suas chamadas pelo cliente do pg.
+// Aqui só temos a definição da propriedade 'query' no objeto exportado,
+// mas ainda precisamos criar a função 'query' de fato para ela funcionar.
 ```
 
-E é aqui que entra a abstração do `node-postgres` com o `pg`:
+---
+
+## 🔌 Criando a abstração com node-postgres (`pg`)
+
+Agora sim, criamos a função que faz a conexão e consulta no banco usando o client do `pg`.
 
 ```js
 // infra/database.js
-// Aqui importamos o cliente do node-pg
+// Aqui importamos o Client da biblioteca 'pg'
 import { Client } from "pg";
 
-// Aqui foi criada a definição do método que faz a consulta no banco
-// Ele é assíncrono, pois é preciso aguardar a conexão e retorno do banco
-// para prosseguir com a aplicação.
+// Definimos a função assíncrona que realiza a consulta no banco
+// - conecta no banco
+// - executa a query recebida por parâmetro
+// - encerra a conexão
+// - retorna o resultado
 async function query(queryObject) {
   const client = new Client();
   await client.connect();
   const result = await client.query(queryObject);
-  client.end(); // não deixa a conexão pendurada, finalizando após o uso.
+  client.end(); // finaliza a conexão para evitar conexões penduradas
   return result;
 }
 
@@ -104,16 +127,21 @@ export default {
 };
 ```
 
-Agora podemos utilizar o objeto `database` para fazer `queries`.
+---
+
+## 🧪 Testando com uma query simples
+
+Agora podemos utilizar o módulo `database` para fazer consultas no banco:
 
 ```js
+// api/v1/status/index.js
 import database from "../../../../infra/database.js";
 
-// a função passou a ser assíncrona, pois precisa esperar o retorno do BD
+// a função passou a ser assíncrona, pois precisa aguardar o retorno do banco
 async function status(request, response) {
-  // alterado o log, pra fazer uma consulta
+  // consulta simples para verificar se a conexão está funcionando
   const result = await database.query("SELECT 1 + 1;");
-  console.log(result);
+  console.log(result); // exibe o retorno completo
   response.status(200).json({
     chave: "o status está ok!",
   });
@@ -122,9 +150,16 @@ async function status(request, response) {
 export default status;
 ```
 
-Nesse momento é gerado erro, pois não foram definidas as credenciais para uso do client pg, então bora fazer isso de forma provisória:
+---
+
+## 🔐 Configurando credenciais provisórias
+
+Nesse ponto, um erro será gerado porque ainda **não definimos as credenciais** para o PostgreSQL.
+
+Vamos incluir essas informações de forma provisória diretamente no código (não recomendado para produção):
 
 ```js
+// infra/database.js
 import { Client } from "pg";
 
 async function query(queryObject) {
@@ -147,14 +182,19 @@ export default {
 };
 ```
 
-Melhorando o retorno para entender o log:
+---
+
+## 🔎 Melhorando a visualização do retorno
+
+Para deixar o log mais limpo, podemos filtrar e exibir apenas os dados da consulta:
 
 ```js
+// api/v1/status/index.js
 import database from "../../../../infra/database.js";
 
 async function status(request, response) {
-  const result = await database.query("SELECT 1 + 1 AS Sum;"); // nome da coluna `Sum`
-  console.log(result.rows); // filtra o log pra trazer somente a linha da query
+  const result = await database.query("SELECT 1 + 1 AS Sum;"); // definimos o nome da coluna como 'Sum'
+  console.log(result.rows); // mostra apenas o array de resultados
   response.status(200).json({
     chave: "o status está ok!",
   });
@@ -163,4 +203,7 @@ async function status(request, response) {
 export default status;
 ```
 
-Agora vamos seguir para parte de `variáveis de ambiente`.
+---
+
+Com isso, temos a conexão funcionando, a consulta sendo executada, e o retorno do banco já visível no log.  
+A próxima etapa será substituir essas credenciais fixas por variáveis de ambiente com `.env` — deixando o código mais seguro e reutilizável.
