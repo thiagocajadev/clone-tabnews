@@ -1,129 +1,209 @@
-# ⚙️ Variáveis de Ambiente
+# 🛢️ Banco de Dados
 
-Para evitar deixar espalhados no código credenciais e configurações fixas, centralizamos essas informações em **variáveis de ambiente**.
+Seguindo as configurações realizadas no Docker, vamos continuar evoluindo a configuração para um acesso profissional ao PostgreSQL.
 
-O ideal é pensar nas aplicações em camadas, onde elas são `stateless` — ou seja, **sem estado**.
+## 📦 Instalando o `pg`
 
-Isso permite alterar valores e comportamentos de forma simples, de acordo com o ambiente em que a aplicação está rodando.
+O `pg` é um client que permite executar comandos e scripts no PostgreSQL via Node.js:
 
-### ❌ Exemplo com configurações fixas (hardcoded)
+```bash
+npm install pg@8.11.3
+```
 
-![Sem variáveis de ambiente](img/exemplo-sem-variaveis-de-ambiente.png)
+### 🔁 Subindo rapidamente o ambiente de testes
 
-### ✅ Exemplo usando variáveis de ambiente
-
-![Com variáveis de ambiente](img/exemplo-com-variaveis-de-ambiente.png)
-
-Veja que usamos variáveis específicas para cada ambiente: local, teste, homologação, qualidade, produção.
-
-Essas configurações podem ser usadas para definir qualquer serviço: banco de dados, e-mail, hospedagem, AWS, Azure, Vercel, entre outros.
-
-Para a aplicação, não importa qual serviço está sendo usado — ela só precisa saber **qual deve utilizar**.  
-Esse é o poder do isolamento entre camadas e responsabilidades em um código bem estruturado.
+```bash
+npm run dev               # roda o servidor web
+npm run test:watch        # roda o jest (agora com --watchAll, testando tudo)
+docker compose -f infra/compose.yaml up -d  # sobe o docker em segundo plano com o banco de dados
+docker compose -f infra/compose.yaml down # baixa o docker, parando o banco
+```
 
 ---
 
-## 🔧 Configurando
+## 📜 Preparando o `database.js`
 
-Para visualizar as variáveis de ambiente via terminal:
-
-No Bash (Linux):
-
-```bash
-env
-```
-
-No PowerShell (Windows):
-
-```powershell
-gci env:
-```
-
-Cada terminal aberto equivale a um novo processo.  
-Ou seja, se você subir um servidor web dentro do terminal, ele irá carregar apenas as variáveis disponíveis naquele momento.
-
-Também é possível definir uma variável no mesmo comando em que o servidor é iniciado:
+Vamos seguir o raciocínio usando **TDD**, importando o módulo `database` no endpoint para que o teste nos diga o que falta implementar:
 
 ```js
-// código parcial do database.js
+// api/v1/status/index.js
+import database from "../../../../infra/database.js";
+
+function status(request, response) {
+  response.status(200).json({
+    chave: "o status está ok!",
+  });
+}
+
+export default status;
+```
+
+Nesse ponto, teremos **dois logs no terminal para análise**:
+
+![Erro status code 500](img/erro-interno-cod-500.png)
+
+- No log do servidor Web (Next.js): `Module not found` — o arquivo ainda não existe.
+- No log de testes do Jest: status code `500` — representa erro interno no servidor.
+
+Esses erros indicam que o banco de dados ainda está indisponível ou não implementado.
+
+---
+
+## 📁 Criando o arquivo `database.js`
+
+Mesmo com um conteúdo vazio, só o fato de o arquivo existir já permite que os testes passem.
+
+```js
+// infra/database.js
+export default {};
+```
+
+Para enxergar o que está sendo importado no endpoint, adicione um `console.log(database)`:
+
+```js
+// api/v1/status/index.js
+import database from "../../../../infra/database.js";
+
+function status(request, response) {
+  console.log(database); // imprime o que está sendo retornado pelo módulo
+  response.status(200).json({
+    chave: "o status está ok!",
+  });
+}
+
+export default status;
+```
+
+Log do servidor web:
+
+```bash
+wait  - compiling...
+event - compiled successfully in 172 ms (38 modules)
+{} // aqui o objeto ainda está vazio
+```
+
+---
+
+## 🧱 Adicionando estrutura ao módulo
+
+Vamos agora começar a estruturar o arquivo, criando a definição de uma função `query`, mesmo que ainda não implementada:
+
+```js
+// infra/database.js
+export default {
+  query: query,
+};
+
+// Aqui só temos a definição da propriedade 'query' no objeto exportado,
+// mas ainda precisamos criar a função 'query' de fato para ela funcionar.
+```
+
+---
+
+## 🔌 Criando a abstração com node-postgres (`pg`)
+
+Agora sim, criamos a função que faz a conexão e consulta no banco usando o client do `pg`.
+
+```js
+// infra/database.js
+// Aqui importamos o Client da biblioteca 'pg'
+import { Client } from "pg";
+
+// Definimos a função assíncrona que realiza a consulta no banco
+// - conecta no banco
+// - executa a query recebida por parâmetro
+// - encerra a conexão
+// - retorna o resultado
 async function query(queryObject) {
+  const client = new Client();
+  await client.connect();
+  const result = await client.query(queryObject);
+  client.end(); // finaliza a conexão para evitar conexões penduradas
+  return result;
+}
+
+export default {
+  query: query,
+};
+```
+
+---
+
+## 🧪 Testando com uma query simples
+
+Agora podemos utilizar o módulo `database` para fazer consultas no banco:
+
+```js
+// api/v1/status/index.js
+import database from "../../../../infra/database.js";
+
+// a função passou a ser assíncrona, pois precisa aguardar o retorno do banco
+async function status(request, response) {
+  // consulta simples para verificar se a conexão está funcionando
+  const result = await database.query("SELECT 1 + 1;");
+  console.log(result); // exibe o retorno completo
+  response.status(200).json({
+    chave: "o status está ok!",
+  });
+}
+
+export default status;
+```
+
+---
+
+## 🔐 Configurando credenciais provisórias
+
+Nesse ponto, um erro será gerado porque ainda **não definimos as credenciais** para o PostgreSQL.
+
+Vamos incluir essas informações de forma provisória diretamente no código (não recomendado para produção):
+
+```js
+// infra/database.js
+import { Client } from "pg";
+
+async function query(queryObject) {
+  // informando credenciais em texto puro provisoriamente
   const client = new Client({
     host: "localhost",
     port: 5432,
     user: "postgres",
     database: "postgres",
-    password: process.env.POSTGRES_PASSWORD, // aqui é informado para usar a variável carregada no terminal
+    password: "local_password",
   });
+  await client.connect();
+  const result = await client.query(queryObject);
+  client.end();
+  return result;
 }
+
+export default {
+  query: query,
+};
 ```
-
-```bash
-# Criando a variável e subindo o servidor web no mesmo processo (válida apenas para o terminal atual)
-POSTGRES_PASSWORD=local_password npm run dev
-```
-
-⚠️ **Importante:**  
-Essa prática **não é recomendada** em ambientes reais, pois expõe informações sensíveis no histórico do terminal.
-
-> 💡 Dica: no Bash, adicione um espaço antes do comando para que ele não apareça ao usar `history`.
 
 ---
 
-## 📁 Trabalhando com o .env
+## 🔎 Melhorando a visualização do retorno
 
-O `dotenv` (ou `.env`) é praticamente um padrão de mercado. Ele é um módulo que carrega variáveis de ambiente para o `process.env`.
-
-No **Next.js**, o uso de `.env` já é suportado nativamente. Basta criar o arquivo `.env` na raiz do projeto:
-
-```env
-NOME_DA_VARIAVEL=valor_da_variavel
-```
-
-Copie e cole as declarações de conexão do `database.js` para o `.env`, ajustando o formato de `:` com espaço para o sinal de `=`.
-
-> 💡 Dica de atalho no VS Code:  
-> Selecione os `:` com `Ctrl + D` e edite em múltiplas linhas ao mesmo tempo.
-
-Exemplo de `.env`:
-
-```env
-POSTGRES_HOST="localhost"
-POSTGRES_PORT=5432
-POSTGRES_USER="postgres"
-POSTGRES_DATABASE="postgres"
-POSTGRES_PASSWORD=local_password
-```
-
-E o `database.js`:
+Para deixar o log mais limpo, podemos filtrar e exibir apenas os dados da consulta:
 
 ```js
-const client = new Client({
-  host: process.env.POSTGRES_HOST,
-  port: process.env.POSTGRES_PORT,
-  user: process.env.POSTGRES_USER,
-  database: process.env.POSTGRES_DATABASE,
-  password: process.env.POSTGRES_PASSWORD,
-});
+// api/v1/status/index.js
+import database from "../../../../infra/database.js";
+
+async function status(request, response) {
+  const result = await database.query("SELECT 1 + 1 AS Sum;"); // definimos o nome da coluna como 'Sum'
+  console.log(result.rows); // mostra apenas o array de resultados
+  response.status(200).json({
+    chave: "o status está ok!",
+  });
+}
+
+export default status;
 ```
 
 ---
 
-## 🐳 Refatorando o compose.yaml
-
-Vamos agora fazer o `Docker Compose` utilizar as variáveis de ambiente:
-
-```yaml
-services:
-  database:
-    image: "postgres:16.0-alpine3.18"
-    env_file:
-      - ../.env
-    ports:
-      - "5432:5432"
-```
-
-Agora é só subir o banco novamente e depois o servidor web.
-
-> 💡 Dica extra:  
-> Existe um fallback (como uma contenção) caso a variável de ambiente `POSTGRES_DATABASE` não seja encontrada.  
-> Apesar de funcionar, o nome correto segundo a documentação oficial no DockerHub é `POSTGRES_DB`.
+Com isso, temos a conexão funcionando, a consulta sendo executada, e o retorno do banco já visível no log.  
+A próxima etapa será substituir essas credenciais fixas por variáveis de ambiente com `.env` — deixando o código mais seguro e reutilizável.
