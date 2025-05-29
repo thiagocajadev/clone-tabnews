@@ -162,3 +162,5 @@ async function status(request, response) {
 
 export default status;
 ```
+
+Agora vamos seguir para parte de `variáveis de ambiente`.

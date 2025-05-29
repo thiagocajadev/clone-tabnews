@@ -14,7 +14,7 @@ npm install pg@8.11.3
 
 ```bash
 npm run dev               # roda o servidor web
-npm run test:watch        # roda o jest (agora com --watchAll, testando tudo)
+npm run test:watch        # roda o jest (agora com --watchAll, testando tudo mesmo sem novas alterações)
 docker compose -f infra/compose.yaml up -d  # sobe o docker em segundo plano com o banco de dados
 docker compose -f infra/compose.yaml down # baixa o docker, parando o banco
 ```
