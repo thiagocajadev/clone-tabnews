@@ -29,3 +29,5 @@ A stack utiliza tecnologias amplamente adotadas no ecossistema JavaScript, facil
 - [Banco de Dados](docs/banco-de-dados.md)
 - [Variáveis de Ambiente](docs/variaveis-de-ambiente.md)
 - [Tornando tudo mais semântico](docs/tornando-semantico.md)
+- [Finalizando o endpoint status](docs/finalizando-endpoint-status.md)
+- [Vazamento de conexões](docs/vazamento-de-conexoes-do-banco.md)
