@@ -47,7 +47,19 @@ const client = new Client({
 
 Mas e se precisar usar o banco local pra testes? Essa camada não se aplica a ambiente local.
 
-Pra isso pode ser verificado com ternário qual ambiente está sendo executada a aplicação:
+Pra isso pode ser verificado com um operador `ternário` qual ambiente está sendo executada a aplicação:
+
+```js
+// Ex: condição (1 é igual a 1) ? Sim : Não;
+condição ? valorSeVerdadeiro : valorSeFalso;
+
+// Ex: condição (process.env.NODE_ENV é "development") ? Sim : Não;
+ssl: process.env.NODE_ENV === "development" ? false : true;
+```
+
+> No ternário, o `primeiro valor` é o que eu quero quando a condição for `verdadeira`. E neste caso, quero `false` quando estiver em `desenvolvimento`.
+
+Com isso, a configuração de banco de dados fica assim:
 
 ```js
 // trecho database.js
