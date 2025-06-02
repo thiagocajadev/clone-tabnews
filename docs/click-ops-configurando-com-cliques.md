@@ -1,163 +1,179 @@
 # 🖱️ ClickOps
 
-ClickOps -> Click Operations ou Operações por cliques é uma prática de configurar um serviço por interface, só marcando e clicando nas coisas.
+**ClickOps** — abreviação de _Click Operations_ ou _Operações por Cliques_ — é uma prática de configurar serviços por meio da interface gráfica, apenas clicando e preenchendo campos.  
+É uma forma simples e bastante comum de configurar sem necessidade de linha de comando.
 
-Essa é uma forma mais simples e comum de configurar via interface gráfica.
+---
 
-## 🐘 Configurando Neon
+## 🐘 Configurando o Neon
 
-Criar uma conta no Neon é bem simples
-
-Podemos especificar as seguintes informações após criar uma contata gratuita.
+Criar uma conta no **Neon** é bem direto. Após o cadastro gratuito, podemos definir algumas informações:
 
 - Nome do projeto: `clone-tabnews`
 - Versão do Postgres: `16`
-- Provedor de Nuvem: `AWS` (Azure opcional)
+- Provedor de Nuvem: `AWS` (opção de Azure disponível)
 - Região: `São Paulo`
 
-> Até a data de hoje, o formulário apresentava apenas essas informações
+> Até a data deste documento, o formulário apresenta apenas essas opções.
 
-Após isso, acesse o painel e procure `Connect to your database`.
+Após a criação, acesse o painel e procure por **Connect to your database**.
 
-Aqui é possível escolher configurar a conexão por uma `connection string` ou especificando como por parâmetros, via variáveis de ambiente.
+Neste ponto, é possível obter a conexão tanto via _connection string_ quanto de forma separada para uso com variáveis de ambiente.
+
+---
 
 ### 🔒 SSL e a segurança da conexão
 
-Testando as credenciais no `.env.development` e subindo localmente, é apresentado erro tanto ao abrir a pagina web, quanto no console do terminal:
+Ao configurar o `.env.development` e tentar rodar localmente, nos deparamos com o seguinte erro, tanto na aplicação web quanto no terminal:
 
 ```powershell
 error: connection is insecure (try using `sslmode=require`)
 ```
 
-Isso ocorre por que até o momento, estávamos trafegando somente via http. O trafego não estava seguro e criptografado, expondo os dados nas requisições e respostas.
+Isso acontece porque, até o momento, o tráfego de dados estava ocorrendo via HTTP, sem criptografia, o que expõe as informações transmitidas.
 
-O SSL (Secure Socket Layer), é uma camada de segurança que cuida disso. Pra resolver essa questão, basta habilitar o uso do ssl no arquivo de ambiente.
+O **SSL (Secure Socket Layer)** entra justamente para proteger esse tráfego. Para resolver o problema, basta habilitar o SSL na configuração do banco:
 
 ```js
-// trecho database.js
+// database.js
 const client = new Client({
   host: process.env.POSTGRES_HOST,
   port: process.env.POSTGRES_PORT,
   user: process.env.POSTGRES_USER,
   database: process.env.POSTGRES_DB,
   password: process.env.POSTGRES_PASSWORD,
-  ssl: true, // aqui habilita o uso da camada de segurança
+  ssl: true, // habilita a camada de segurança SSL
 });
 ```
 
-Mas e se precisar usar o banco local pra testes? Essa camada não se aplica a ambiente local.
+#### ✅ Tratando o ambiente local
 
-Pra isso pode ser verificado com um operador `ternário` qual ambiente está sendo executada a aplicação:
+Durante o desenvolvimento local, o SSL pode não ser necessário. Podemos usar um operador ternário para habilitar ou não o SSL de acordo com o ambiente:
 
 ```js
-// Ex: condição (1 é igual a 1) ? Sim : Não;
+// Exemplo genérico de ternário:
 condição ? valorSeVerdadeiro : valorSeFalso;
 
-// Ex: condição (process.env.NODE_ENV é "development") ? Sim : Não;
+// Aplicado ao caso:
 process.env.NODE_ENV === "development" ? false : true;
 ```
 
-> No ternário, o `primeiro valor` é o que eu quero quando a condição for `verdadeira`. E neste caso, quero `false` quando estiver em `desenvolvimento`.
+> No ternário, o primeiro valor define o que ocorre quando a condição é verdadeira. No nosso caso: se for ambiente de desenvolvimento, desabilitamos o SSL.
 
-Com isso, a configuração de banco de dados fica assim:
+Assim, o código final fica:
 
 ```js
-// trecho database.js
+// database.js
 const client = new Client({
   host: process.env.POSTGRES_HOST,
   port: process.env.POSTGRES_PORT,
   user: process.env.POSTGRES_USER,
   database: process.env.POSTGRES_DB,
   password: process.env.POSTGRES_PASSWORD,
-  ssl: process.env.NODE_ENV === "development" ? false : true; // agora é feita verificação do ambiente
+  ssl: process.env.NODE_ENV === "development" ? false : true,
 });
 ```
 
+---
+
 ## 🌊 Configurando Digital Ocean
 
-Para configurar os serviços de banco de dados na Digital Ocean, basta preencher os dados de cadastro.
+Na **Digital Ocean**, o processo é bem semelhante:
 
-Após isso, selecionar o banco de dados e alterar o nome da instancia para `production-postgres`.
+1. Complete o cadastro.
+2. Crie o banco de dados e renomeie a instância para `production-postgres`.
 
-> Essa é uma boa prática, colocar um prefixo production, test, qa... isso auxilia na hora de trabalhar e executar comandos em ambientes diferentes
+> 🚩 Boa prática: utilizar prefixos como `production-`, `test-`, `qa-` ajuda a organizar os ambientes e evita erros em operações futuras.
 
-Concluindo o setup inicial, clique para continuar sem a conexão segura, pois vamos nos conectar por fora da infra da Digital Ocean, no caso, da Vercel.
+Após o setup inicial, prossiga desabilitando a opção de conexão segura (SSL), já que faremos a conexão através da Vercel, fora da rede privada da Digital Ocean.
 
-E então finalizar. Agora, basta copiar os dados disponibilizados e colocar nas variáveis de ambiente da Vercel.
+Agora, copie os dados fornecidos e configure nas variáveis de ambiente da Vercel:
 
 ![Variáveis de Ambiente](img/vercel-variaveis-de-ambiente.png)
 
-> Na imagem deixei com os dados locais. Basta alterar para qualquer serviço de hospedagem de banco de dados
+> Na imagem, os dados estão simulando ambiente local. Basta ajustar com as credenciais reais.
 
-E testando... deu erro 500! Verificando os logs, temos um erro no certificado.
+---
+
+### 🚫 Erro 500 ao testar conexão
+
+Durante os testes, ao acessar a aplicação, surgiu o erro:
 
 ![Erro 500 certificado digital](img/erro-500-vercel-digital-ocean-ca.png)
 
-### ✍🏻 Certificado Autoassinado
+O problema está relacionado ao **certificado digital**. A Digital Ocean exige o uso de um **certificado autoassinado (self-signed certificate)**.
 
-Aqui temos uma diferença no serviço relacionada a segurança. O serviço exige a instalação de um `certificado autoassinado`.
+---
 
-O ideal é replicar essa situação no ambiente local para testarmos o certificado digital.
+### ✍🏻 Tratando o Certificado Autoassinado
 
-![Erro 500 local](img/erro500-local-cert.png)
-
-Alterando o ambiente para injetar valores:
+Para simular e testar localmente o uso do certificado:
 
 ```js
-// trecho database.js
+// database.js
 const client = new Client({
   host: process.env.POSTGRES_HOST,
   port: process.env.POSTGRES_PORT,
   user: process.env.POSTGRES_USER,
   database: process.env.POSTGRES_DB,
   password: process.env.POSTGRES_PASSWORD,
-  ssl: getSSLValues(), // criado método com abstração da lógica
+  ssl: getSSLValues(), // abstraímos a lógica para uma função separada
 });
 
 function getSSLValues() {
   if (process.env.POSTGRES_CA) {
-    // se existirem dados na variável POSTGRES_CA
+    // Se a variável de ambiente POSTGRES_CA existir, usamos o conteúdo dela
     return {
-      ca: process.env.POSTGRES_CA, // retorna o conteúdo do certificado dentro da propriedade
+      ca: process.env.POSTGRES_CA,
     };
   }
+  // Em outros casos, mantemos o SSL habilitado
   return process.env.NODE_ENV === "development" ? true : true;
 }
 ```
 
-Como o valor de uma variável de ambiente é uma string, tudo deve ficar em uma mesma linha.
+#### 🔄 Preparando o conteúdo do certificado
 
-Pra resolver isso, podemos adicionar a quebra com a combinação `\n`.
+Como variáveis de ambiente são sempre interpretadas como strings, precisamos adicionar manualmente as quebras de linha no conteúdo do certificado usando `\n`:
 
-> o `\n` é utilizado de forma invisível em vários editores, a gente acaba nem vendo
-
-Baixe o certificado da Digital Ocean e abra o mesmo... deve vir algo assim:
+Exemplo do conteúdo original:
 
 ```
 -----BEGIN CERTIFICATE-----
 MIIEUDCCArigAwIBAgIUBgS0wppL1p6E4M3HJYqXw6JQ71YwDQYJKoZIhvcNAQEM
-... // (muitas linhas aqui)
+... (linhas omitidas) ...
 UC9DWQ==
 -----END CERTIFICATE-----
-
 ```
 
-Adicione a quebra de linha em cada linha do certificado `\n`, selecionando o espaço em branco ao termino de cada linha e usando `Ctrl + d`.
-
-![Quebra de linha](img/quebra-de-linha-cert.png)
-
-Crie uma nova variável de ambiente e adicione o certificado.
+Agora, convertemos para:
 
 ```powershell
 POSTGRES_CA="-----BEGIN CERTIFICATE-----\nMIIEUDCCArigAwIBAgIUBgS0wppL1p6E4...string-longa...==\n-----END CERTIFICATE-----\n";
 ```
 
-> O conteúdo deve estar dentro de aspas duplas, para interpretar corretamente os caracteres especiais como os barra n `\n`
+> ⚠️ Atenção:
+>
+> - O valor precisa estar entre aspas duplas para que o `\n` seja interpretado corretamente.
+> - Alguns serviços (como a própria Vercel) podem aceitar diretamente o conteúdo puro do certificado sem a necessidade de adicionar `\n`, pois tratam internamente.
 
-Realizando testes e deu bom!
+#### 🔧 Como inserir rapidamente as quebras:
+
+No editor de texto:
+
+1. Selecione o fim de cada linha.
+2. Use `Ctrl + D` para múltiplas seleções.
+3. Substitua o fim da linha por `\n`.
+
+![Quebra de linha](img/quebra-de-linha-cert.png)
+
+---
+
+## ✅ Testes realizados
+
+### Ambiente Local
 
 ```js
-// Ambiente Local
 // 20250602112404
 // https://fuzzy-waffle-g6575wjxrj2vvqq-3000.app.github.dev/api/v1/status
 
@@ -173,8 +189,24 @@ Realizando testes e deu bom!
 }
 ```
 
-Agora criando a variável de ambiente na Vercel e adicionando o certificado com quebras de linha.
+### Ambiente Produção (Vercel)
 
-> Atenção para passar o conteúdo entre as aspas duplas para correta interpretação.
-> Em alguns ambientes, também pode haver um tratamento direto do conteúdo de certificado, apenas copiando
-> o certificado puro já será aceito
+```js
+// 20250602122534
+// https://clone-tabnews.thiagokj.site/api/v1/status
+
+{
+  "updated_at": "2025-06-02T15:25:33.579Z",
+  "dependencies": {
+    "database": {
+      "version": "16.9",
+      "max_connections": 25,
+      "opened_connections": 2
+    }
+  }
+}
+```
+
+---
+
+Agora temos uma conexão segura, funcionando tanto localmente quanto em produção, com uso do certificado digital de forma flexível.
