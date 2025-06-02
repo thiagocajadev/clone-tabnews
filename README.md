@@ -31,3 +31,4 @@ A stack utiliza tecnologias amplamente adotadas no ecossistema JavaScript, facil
 - [Tornando tudo mais semântico](docs/tornando-semantico.md)
 - [Finalizando o endpoint status](docs/finalizando-endpoint-status.md)
 - [Vazamento de conexões](docs/vazamento-de-conexoes-do-banco.md)
+- [ClickOps - Configuração por cliques](docs/click-ops-configurando-com-cliques.md)
