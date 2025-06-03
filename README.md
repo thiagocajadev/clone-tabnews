@@ -32,3 +32,5 @@ A stack utiliza tecnologias amplamente adotadas no ecossistema JavaScript, facil
 - [Finalizando o endpoint status](docs/finalizando-endpoint-status.md)
 - [Vazamento de conexões](docs/vazamento-de-conexoes-do-banco.md)
 - [ClickOps - Configuração por cliques](docs/click-ops-configurando-com-cliques.md)
+- [Migrations](docs/migrations-configuracao.md)
+- [Migrations - Dry Run e Live Run](docs/migrations-dry-run-live-run.md)
