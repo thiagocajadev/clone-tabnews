@@ -1,6 +1,6 @@
 # 🚀 Endpoint de Migrations com Jest e Node-pg-migrate
 
-Nesse módulo, vamos estruturar nossos testes para trabalhar com migrations de banco de dados de forma limpa, sequencial e controlada.
+Vamos estruturar nossos testes para trabalhar com migrations de banco de dados de forma limpa, sequencial e controlada.
 
 Como estamos falando de banco de dados, **ordem e isolamento de testes** são fundamentais para evitar testes flutuantes e falsos positivos.
 
@@ -66,10 +66,6 @@ Assim o Jest entende os imports absolutos da raiz do projeto.
 ## 🔐 Carregando variáveis de ambiente no Jest
 
 Por padrão o Jest não carrega o `.env.development`. Precisamos forçar isso com `dotenv`:
-
-```bash
-npm install dotenv --save-dev
-```
 
 Agora adicionamos no `jest.config.js`:
 
