@@ -1,12 +1,12 @@
 # Git Branches
 
-Uma Branch no git pode ser traduzida como um galho de uma arvore.
+Uma Branch no Git pode ser vista como um galho de uma árvore, ou até como uma cópia separada do projeto.
 
-Seria uma ramificação, que se olharmos bem, se integra a arvore como um todo.
-
-Fora do Git, se quisermos controlar alguma versão do código, fazemos um copia e cola
+Ela é como um caminho paralelo: você pode trabalhar nela sem mexer no restante do projeto. Depois, se tudo der certo, pode juntar de volta com o restante, como se o galho fosse reintegrado à árvore.
 
 ## Compreensão Nível 1
+
+Fora do Git, se quisermos controlar alguma versão do código, fazemos um copia e cola
 
 da pasta, colocando no final v1, v2 ou a data 202506061442...
 
@@ -278,3 +278,86 @@ Switched to branch 'tamanho-do-cabelo'
 README.md   docs   jest.config.js  models        package-lock.json  pages
 cabelo.txt  infra  jsconfig.json   node_modules  package.json       tests
 ```
+
+Então agora, voltando a main e preparando um novo commit dessa documentação:
+
+```powershell
+# voltando pra main
+@thiagokj ➜ /workspaces/clone-tabnews (tamanho-do-cabelo) $ git checkout main
+Switched to branch 'main'
+
+# verificando pendencias de commit na main
+@thiagokj ➜ /workspaces/clone-tabnews (main) $ git status
+On branch main
+Your branch is ahead of 'origin/main' by 1 commit.
+  (use "git push" to publish your local commits)
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        deleted:    cabelo.txt
+        deleted:    qual-branch-eu-estou.txt
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        docs/git-branches-sao-galhos.md
+        docs/img/branch-head-aponta-pro-hash-nivel-3.png
+        docs/img/branch-head-move-com-novo-commit.png
+        docs/img/branch-head-movido-pra-nova-branch.png
+        docs/img/branch-linha-do-tempo-nivel-2.png
+        docs/img/branch-main.png
+        docs/img/branch-tamanho-do-cabelo.png
+
+# removendo arquivos desnecessários
+@thiagokj ➜ /workspaces/clone-tabnews (main) $ git rm cabelo.txt
+rm 'cabelo.txt'
+@thiagokj ➜ /workspaces/clone-tabnews (main) $ git rm qual-branch-eu-estou.txt
+rm 'qual-branch-eu-estou.txt'
+
+# verificando novo estado de apontamento no git
+rm 'qual-branch-eu-estou.txt'
+@thiagokj ➜ /workspaces/clone-tabnews (main) $ git status
+On branch main
+Your branch is ahead of 'origin/main' by 1 commit.
+  (use "git push" to publish your local commits)
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        deleted:    cabelo.txt
+        deleted:    qual-branch-eu-estou.txt
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        docs/git-branches-sao-galhos.md
+        docs/img/branch-head-aponta-pro-hash-nivel-3.png
+        docs/img/branch-head-move-com-novo-commit.png
+        docs/img/branch-head-movido-pra-nova-branch.png
+        docs/img/branch-linha-do-tempo-nivel-2.png
+        docs/img/branch-main.png
+        docs/img/branch-tamanho-do-cabelo.png
+
+# adicionando arquivos não rastreados com commit, criando um novo hash e apontando head
+git commit -A
+git commit -m 'doc criação de `branch`'
+
+```
+
+> **Resumo prático:**  
+> Branches são como "fotocópias inteligentes" que o Git gerencia apontando sempre para os commits. Isso permite total liberdade para testar, criar e modificar sem medo de afetar o código principal.
+
+## Resumo geral
+
+- **Git Branches:** cada branch é como uma ramificação, permitindo criar versões isoladas do projeto.
+- **Criação de branch:** `git branch nome-da-branch`.
+- **Mudança de branch:** `git checkout nome-da-branch`.
+- **Commit:** registra o estado atual dos arquivos (blobs) e cria um histórico (commit).
+- **HEAD:** ponteiro que indica onde estamos no histórico.
+- **Cada branch aponta para um commit específico.**
+- **Ao fazer novos commits, o ponteiro da branch avança automaticamente.**
+- **É possível voltar para commits antigos usando o hash com `git checkout hash`.**
+- **Esse movimento direto pelo hash chama-se detached HEAD (cuidado: alterações podem se perder se não criar nova branch).**
+- **Arquivos deletados ou alterados em uma branch não afetam as outras, a menos que façamos merge.**
+- **Para restaurar um arquivo apagado antes do commit:** `git checkout -- nome-do-arquivo`.
+- **Histórico dos commits pode ser inspecionado com `git log`.**
+- **Git usa blobs (conteúdos), árvores (estrutura) e commits (histórico).**
+- **Todo controle interno fica na pasta oculta `.git`.**
+- **O Git é extremamente eficiente porque salva apenas as diferenças entre arquivos.**

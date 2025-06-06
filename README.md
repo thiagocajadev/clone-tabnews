@@ -36,3 +36,4 @@ A stack utiliza tecnologias amplamente adotadas no ecossistema JavaScript, facil
 - [Migrations - Parte 2](docs/migrations-parte-2.md)
 - [Migrations - Parte 3](docs/migrations-parte-3.md)
 - [Migrations - Parte 4](docs/migrations-parte-4.md)
+- [Git Branch - Uma cópia separada](docs/git-branches-sao-copias.md)
