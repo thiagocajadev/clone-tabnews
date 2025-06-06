@@ -129,3 +129,17 @@ if (request.method === "POST") {
   return response.status(200).json(migratedMigrations);
 }
 ```
+
+Testando tudo e funcionando, hora de testar em produção usando cURL
+
+```powershell
+# utilizando o parâmetro -X NOME_DO_MÉTODO para requisição
+curl -X POST https://clone-tabnews.thiagokj.site/api/v1/migrations
+
+# log do terminal
+@thiagokj ➜ /workspaces/clone-tabnews (main) $ curl -X POST https://clone-tabnews.thiagokj.site/api/v1/migrations
+[{"path":"infra/migrations/1748980342283_test-migrations.js","name":"1748980342283_test-migrations","timestamp":1748980342283}]
+
+@thiagokj ➜ /workspaces/clone-tabnews (main) $ curl -X POST https://clone-tabnews.thiagokj.site/api/v1/migrations
+[]
+```
