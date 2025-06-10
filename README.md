@@ -38,3 +38,4 @@ A stack utiliza tecnologias amplamente adotadas no ecossistema JavaScript, facil
 - [18 - Migrations - Parte 3](docs/18-migrations-parte-3.md)
 - [19 - Migrations - Parte 4](docs/19-migrations-parte-4.md)
 - [20 - Git Branch - Uma cópia separada](docs/20-git-branches-sao-copias.md)
+- [21 - Deploy em Homologação](docs/21-deploy-em-homologacao.md)
