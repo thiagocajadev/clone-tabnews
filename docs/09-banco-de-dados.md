@@ -205,5 +205,6 @@ export default status;
 
 ---
 
-Com isso, temos a conexão funcionando, a consulta sendo executada, e o retorno do banco já visível no log.  
+Com isso, temos a conexão funcionando, a consulta sendo executada, e o retorno do banco já visível no log.
+
 A próxima etapa será substituir essas credenciais fixas por variáveis de ambiente com `.env` — deixando o código mais seguro e reutilizável.
