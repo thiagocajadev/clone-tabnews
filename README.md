@@ -4,6 +4,13 @@ Esse projeto é voltado para estudos com base no [curso.dev](https://curso.dev).
 
 Aqui vamos fazer um clone do TabNews, que é um fórum permitindo posts e interação entre os usuários.
 
+O mais legal desse tipo de projeto é o poder de criar algo do ZERO, documentando
+passo a passo, como se fosse um tutorial pra mim.
+
+Mesmo que seja algo pessoal, eu curto compartilhar, pois pode ser útil pra alguém
+que esteja estudando, quem sabe um exemplo que conecta os pontos pode estar nesse
+material.
+
 # 🖥️ Tecnologias
 
 A stack utiliza tecnologias amplamente adotadas no ecossistema JavaScript, facilitando a integração, o deploy contínuo (CI/CD) e o desenvolvimento fullstack (Desde de banco de dados até a tela do usuário).
@@ -38,3 +45,4 @@ A stack utiliza tecnologias amplamente adotadas no ecossistema JavaScript, facil
 - [18 - Migrations - Parte 3](docs/18-migrations-parte-3.md)
 - [19 - Migrations - Parte 4](docs/19-migrations-parte-4.md)
 - [20 - Git Branch - Uma cópia separada](docs/20-git-branches-sao-copias.md)
+- [21 - Deploy em Homologação](docs/21-deploy-em-homologacao.md)
