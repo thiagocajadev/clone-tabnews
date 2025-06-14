@@ -48,3 +48,4 @@ A stack utiliza tecnologias amplamente adotadas no ecossistema JavaScript, facil
 - [21 - Deploy em Homologação](docs/21-deploy-em-homologacao.md)
 - [22 - Git por baixo dos panos](docs/22-git-por-baixo-dos-panos.md)
 - [23 - Hora do merge](docs/23-hora-do-merge.md)
+- [24 - Modelos de trabalho](docs/24-CI-CD-modelos-de-trabalho.md)
