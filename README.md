@@ -50,3 +50,5 @@ A stack utiliza tecnologias amplamente adotadas no ecossistema JavaScript, facil
 - [23 - Hora do merge](docs/23-hora-do-merge.md)
 - [24 - Modelos de trabalho](docs/24-CI-CD-modelos-de-trabalho.md)
 - [25 - Estabilizando o ambiente](docs/25-estabilizando-o-ambiente.md)
+- [26 - Estabilizando testes locais](docs/26-estabilizando-testes-locais.md)
+- [27 - Ajustes Orquestração](docs/27-ajustes-orquestracao.md)
