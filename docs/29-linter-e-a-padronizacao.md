@@ -45,3 +45,7 @@ jobs:
       # script conforme definido no package.json
       - run: npm run lint:prettier:check # roda o comando especifico do prettier
 ```
+
+Agora, basta fazer o PR... e configurar mais um `RuleSet` no GitHub para tornar essa etapa obrigatória.
+
+![Sem ruleset](img/github-linter-sem-ruleset.png)
