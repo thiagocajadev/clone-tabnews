@@ -357,3 +357,6 @@ Fazendo um novo check, tudo fica OK.
 
 ✔ No ESLint warnings or errors
 ```
+
+> Fui tentar fazer um commit da documentação na main e não funciona mais graças aos rulesets de proteção 🦺
+> Agora vou usar uma branch só pra isso docs-step-by-step
