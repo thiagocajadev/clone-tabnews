@@ -259,3 +259,16 @@ Date:   Mon Jun 23 11:10:30 2025 -0300
 
     Merge pull request #20 from thiagokj/git-commit-best-practices
 ```
+
+Fazendo um novo commit e push, o CI funciona:
+
+```bash
+1s
+Run npx commitlint --from d0f5927116041ced40f83d7d83fbadec1058ec1e --to 7633dc4ce8d8e5011213d741ca4f5b98675d2a7c --verbose
+⧗   input: docs: update linter commits
+✔   found 0 problems, 0 warnings
+⧗   input: ci: add `commitlint` job in `linting` GitHub Action
+✔   found 0 problems, 0 warnings
+⧗   input: ci: add `commitlint` with `Conventional Commits` config
+✔   found 0 problems, 0 warnings
+```
