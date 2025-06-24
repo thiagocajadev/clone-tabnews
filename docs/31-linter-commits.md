@@ -79,3 +79,93 @@ echo "Feat: mensagem de commit" | npx commitlint
 ⧗   input: Feat: mensagem de commit
 ✖   type must be lower-case [type-case]
 ```
+
+## Configurando CI
+
+```bash
+npx commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }} --verbose
+```
+
+Essa instrução do `commitlint` serve para verificar se as mensagens de _commit_ de um _pull request_ seguem um padrão definido (como Conventional Commits).
+
+Explicação dos parâmetros:
+
+- `npx commitlint`: executa o commitlint.
+- `--from`: SHA do commit base (ponto de partida do PR).
+- `--to`: SHA do commit final (último commit no PR).
+- `--verbose`: exibe logs detalhados da verificação.
+
+Contexto de uso:
+
+Dentro de um workflow no GitHub Actions, `${{ github.event.pull_request.base.sha }}` representa o commit base do PR, e `${{ github.event.pull_request.head.sha }}` representa o commit mais recente do PR.
+
+Vamos entender como ele faz a análise com base nesse trecho do git log:
+
+```bash
+git log
+commit 2d167955fad732b585c9682dc440c37e596e6f70 (HEAD -> lint-commits, origin/lint-commits)
+Author: Thiago Cajaiba <thiago.cajaiba@gmail.com>
+Date:   Mon Jun 23 13:33:09 2025 -0300
+
+    add `commitlint` with `Conventional Commits` config
+
+commit d0f5927116041ced40f83d7d83fbadec1058ec1e (origin/main, origin/HEAD, main)
+Merge: 5fb1866 392a2ef
+Author: Thiago Cajaíba <51033018+thiagokj@users.noreply.github.com>
+Date:   Mon Jun 23 11:10:30 2025 -0300
+
+    Merge pull request #20 from thiagokj/git-commit-best-practices
+
+    docs: add commit best practices
+
+commit 392a2ef96793286fd94d7084ba654a87ccdf906e (origin/git-commit-best-practices)
+Author: Thiago Cajaiba <thiago.cajaiba@gmail.com>
+Date:   Mon Jun 23 11:07:40 2025 -0300
+
+    docs: add commit best practices
+
+commit fe27a01d378b34531ba7682eb7e6d6276453592c
+Author: Thiago Cajaiba <thiago.cajaiba@gmail.com>
+Date:   Sun Jun 22 12:43:50 2025 -0300
+
+    add commit documentation
+```
+
+No contexto do commitlint com `--from` e `--to`, o que acontece é o seguinte:
+
+--from aponta para o commit base do PR (neste caso: d0f5927, que está na main);
+
+--to aponta para o commit mais recente no PR (neste caso: 2d16795, que está ni lint-commits, o HEAD do PR).
+
+O commitlint verifica todos os commits entre esses dois pontos, exclusivo do from e inclusivo do to.
+
+Ou seja, ele vai analisar:
+
+```bash
+2d16795 (add `commitlint` with `Conventional Commits` config)
+```
+
+Esse é o único commit novo na branch lint-commits em relação à main, e é ele que será validado.
+
+Resumindo: o HEAD da branch do PR é o ponto final da análise, e o base da main é o ponto de partida. A diferença entre os dois é o conjunto de commits que será checado.
+
+```yaml
+# adicionado novo job no linting.yaml
+# outros jobs acima...
+commitlint:
+  name: Commitlint
+  runs-on: ubuntu-latest
+  steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0 # instrução para analisar todos os commits. sem isso, é analisado apenas o último.
+
+    - uses: actions/setup-node@v4
+      with:
+        node-version: "lts/hydrogen"
+
+    - run: npm ci
+
+    # executa o comando conforme a documentação do commitlint
+    - run: npx commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }} --verbose
+```
