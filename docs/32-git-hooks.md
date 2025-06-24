@@ -88,3 +88,81 @@ Detalhamento:
 $1 é o primeiro argumento passado ao hook, que no caso do commit-msg é o caminho para o arquivo temporário contendo a mensagem de commit.
 
 `npx commitlint --edit $1` diz ao CommitLint para validar a mensagem de commit contida nesse arquivo, de acordo com as regras definidas na sua configuração (no caso `commitlint.config.js`).
+
+```bash
+# commit de teste com log
+clone-tabnews on  hooks [+] is 📦 v1.0.0 via  v18.20.8
+❯ git commit -m 'teste de commit'
+⧗   input: teste de commit
+✖   subject may not be empty [subject-empty]
+✖   type may not be empty [type-empty]
+
+✖   found 2 problems, 0 warnings
+ⓘ   Get help: https://github.com/conventional-changelog/commitlint/#what-is-commitlint
+
+husky - commit-msg script failed (code 1)
+```
+
+Agora temos a validação de commits local!!! 🥳
+
+e o comando pra fazer commit é o mesmo, ou seja, alterações e modificações internas adicionaram melhorias ao `git`.
+
+## Commitizen
+
+Para facilitar o lembrete de tipos de commit (feat, fix, ci), temos um modulo muito popular chamado `commitizen`
+
+```bash
+# instala o commitizen
+npm i -D commitizen@4.3.0
+
+# configura para uso local
+npx commitizen init cz-conventional-changelog --save-dev --save-exact
+
+# dando uma olhada com git diff
+       "devDependencies": {
+         "@commitlint/cli": "^19.3.0",
+         "@commitlint/config-conventional": "^19.2.2",
++        "commitizen": "^4.3.0",
+         "concurrently": "^8.2.2",
++        "cz-conventional-changelog": "^3.3.0", # configurado adaptador para uso do conventional commits
+
+# olhando mais um pouco, foi gerada configuração com caminho padrão pro commitizen
++  },
++  "config": {
++    "commitizen": {
++      "path": "./node_modules/cz-conventional-changelog"
++    }
+```
+
+Com isso feito, bora criar um script para executar o commitizen
+
+```js
+// package.json
+// scripts...
+   "wait-for-postgres": "node infra/scripts/wait-for-postgres.js",
+    "prepare": "husky",
+    "commit": "cz" // ao executar o comando commit, ele executa o cz do commitizen
+```
+
+Agora ao executar um `npm run commit`, temos todas as opções de tipo de commit em lista:
+
+```bash
+clone-tabnews on  hooks [+] is 📦 v1.0.0 via  v18.20.8 took 2s
+❯ npm run commit
+
+> clone-tabnews@1.0.0 commit
+> cz
+
+cz-cli@4.3.0, cz-conventional-changelog@3.3.0
+
+? Select the type of change that you're committing: (Use arrow keys)
+❯ feat:     A new feature
+  fix:      A bug fix
+  docs:     Documentation only changes
+  style:    Changes that do not affect the meaning of the code
+(white-space, formatting, missing semi-colons, etc)
+  refactor: A code change that neither fixes a bug nor adds a feature
+  perf:     A code change that improves performance
+```
+
+Agora é feito um passo a passo para escrever o commit de forma padrão, sem deixar nenhuma ponta solta.
