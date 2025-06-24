@@ -165,4 +165,4 @@ cz-cli@4.3.0, cz-conventional-changelog@3.3.0
   perf:     A code change that improves performance
 ```
 
-Agora é feito um passo a passo para escrever o commit de forma padrão, sem deixar nenhuma ponta solta.
+Fechou! Temos um passo a passo para escrever o commit de forma padrão, sem deixar nenhuma ponta solta.
