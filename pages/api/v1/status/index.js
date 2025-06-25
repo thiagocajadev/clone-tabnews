@@ -1,9 +1,6 @@
 import database from "infra/database";
 
 async function status(request, response) {
-  const secret = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY";
-  console.log("Segredo:", secret);
-
   const updatedAt = new Date().toISOString();
 
   const databaseVersionResult = await database.query("SHOW server_version;");
