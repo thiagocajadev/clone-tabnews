@@ -57,3 +57,4 @@ A stack utiliza tecnologias amplamente adotadas no ecossistema JavaScript, facil
 - [30 - Boas práticas de Commits](docs/30-commits-boas-praticas.md)
 - [31 - Linter e padronização de commits](docs/31-linter-commits.md)
 - [32 - Usando Hooks do Git](docs/32-git-hooks.md)
+- [33 - Aplicando segurança via linter](docs/33-linter-sem-segredos.md)
