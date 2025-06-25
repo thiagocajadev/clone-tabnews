@@ -2,7 +2,7 @@
 
 Aceitando o desafio proposto para proteção contra vazamento de segredos no código, vamos incluir um plugin ao ESLint, o [no-secrets](https://www.npmjs.com/package/eslint-plugin-no-secrets).
 
-**Justificativa:** Arquitetura do projeto. Vamos continuar o mais próximo do ecossistema javascript, seguindo a didática até essa aula, ser perder o foco na construção passo a passo.
+**Justificativa:** Arquitetura do projeto. Vamos continuar o mais próximo do ecossistema javascript, seguindo a didática até essa aula, sem perder o foco na construção passo a passo.
 
 ## Plugin eslint no-secrets
 
@@ -16,7 +16,7 @@ O plugin `no-secrets` utiliza em seu algoritmo a combinação de `regex + entrop
 
 Então, ele procura com base na aleatoriedade de chaves conhecidas por padrão e tamanho, gerando alertas.
 
-Para configurar, basta adicionar ao eslintrc.json
+Habilitando o plugin no arquivo `eslintrc.json`:
 
 ```json
 {
@@ -104,11 +104,9 @@ clone-tabnews on lint-no-secrets
 ✖ 1 problem (1 error, 0 warnings)
 ```
 
-Como apenas habilitamos um plugin no ESLint, o comando que faz o lint check ganhar esse **poder** de verificação.
+Como apenas habilitamos um plugin no ESLint, o comando que faz o lint check ganha esse **poder** de verificação.
 
 ```bash
-npm run lint:eslint:check
-
 # log do terminal rodando lint:eslint:check
 clone-tabnews on lint-no-secrets
 ❯ npm run lint:eslint:check
@@ -121,13 +119,15 @@ clone-tabnews on lint-no-secrets
 4:18  Error: Found a string with entropy 4.45 : "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"  no-secrets/no-secrets
 ```
 
-> Como já temos estruturado o lint:eslint:check, não precisamos alterar nada no workflow para o CI.
+> Como já está estruturado o `lint:eslint:check`, não é preciso alterar nada no workflow para o CI.
 
-Pra ver se isso é verdade, vou fazer um commit e mandar pro GitHub pra conferir.
+OK, mas só acredito vendo! 👀
+
+Fiz um `commit` e depois `push` pro GitHub e fui assitir o `CI` trabalhar...
 
 ![CI - erro com no secrets](img/ci-eslint-no-secrets-erro.png)
 
-Olha só, a action falhou e pegou o erro!!! Então funcionou.
+Olha só, a action pegou o erro!!! Então funcionou.
 
 > 💡 Fica o ponto de atenção aqui. Como não bloqueamos o commit e push, subiu pro CI um dado sensível.
 > Em um caso real, a primeira coisa a fazer seria trocar as credenciais com urgência.
@@ -265,5 +265,3 @@ clone-tabnews on  lint-no-secrets
 Por que o comando não funciona? o `next lint --dir .` analisa apenas arquivos dentro da estrutura do next.
 
 Então temos que tomar uma decisão de escopo: usar `eslint` para cobrir e analisar todo o projeto ou focar apenas em vazamentos na estrutura do next com `next lint`.
-
-Bons estudos pessoal!
