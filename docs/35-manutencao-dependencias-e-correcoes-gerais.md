@@ -337,8 +337,6 @@ Então o `npm` fica sem saber como resolver a versão correta, e **dá erro**.
    npm install eslint-plugin-jest@28.8.0 --legacy-peer-deps
    ```
 
-````
-
 1. **Ou, forçando a instalação (menos recomendado):**
 
    ```bash
@@ -355,4 +353,3 @@ Então o `npm` fica sem saber como resolver a versão correta, e **dá erro**.
 - Podemos então:
   - Ignorar com `--legacy-peer-deps`
   - Ajustar tudo manualmente
-````
