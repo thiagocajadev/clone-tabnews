@@ -60,3 +60,4 @@ A stack utiliza tecnologias amplamente adotadas no ecossistema JavaScript, facil
 - [33 - Aplicando segurança via linter](docs/33-linter-sem-segredos.md)
 - [34 - Criando arquivo de licença](docs/34-criando-arquivo-de-licenca.md)
 - [35 - Manutenção - atualizando dependências e correções gerais](docs/35-manutencao-dependencias-e-correcoes-gerais.md)
+- [36 - Refatoração - realizando ajustes e padronização](docs/36-refatoracao-ajustes-e-padronizacao.md)
