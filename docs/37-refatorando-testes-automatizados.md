@@ -74,3 +74,76 @@ Saída no terminal:
 ```
 
 > Agora temos uma saída seguindo linguagem natural, indicando o endpoint, qual tipo de requisição está sendo feita contra ele, qual o usuário está fazendo e qual a ação o teste executou.
+
+### Corrigindo commits
+
+Duas frases nos últimos commits podem ser melhoradas, então bora utilizar os comandos do git pra resolver.
+
+```bash
+# aqui voltamos a head, apontando para o commit anterior as modificações
+# abrindo de forma interativa o rebase
+git rebase -i 6b2eed22dd0914e6163743c2fb24a20e04d57231
+```
+
+O editor fica aberto para selecionar as opções do que fazer com cada commit
+
+```bash
+# pick não faz nada
+pick 50cc993 chore: add `--verbose` to `test:watch`
+# esse commit será editado. Pra manter a mesma mensagem, só fazer --amend --no-edit
+edit 1590ab1 test: rename all descriptions to use new pattern
+# esse commit será alterado apenas a mensagem
+reword b2a83bb refactor: use `orchestrator.cleanDatabase` in tests
+```
+
+Ao fechar o editor, o git toma o controle e permite fazer a primeira alteração no edit 1590ab1 test...
+
+Depois de alterar e fazer um novo commit, basta continuar as alterações com o rebase.
+
+```bash
+git rebase --continue
+```
+
+O git toma o controle de novo e muda edição da mensagem. Fechou e salvou o arquivo, basta rodar um git log pra conferir. Depois um git push -f pra atualizar a branch remota.
+
+```bash
+# git log com as alterações (novos hashes gerados sempre que há um novo commit)
+commit 98bdb2c9811903cb5ee79ef353695c8a285648e0 (HEAD -> maintenance-patch, origin/maintenance-patch)
+Author: Thiago Cajaiba <thiago.cajaiba@gmail.com>
+Date:   Thu Jul 3 10:20:07 2025 -0300
+
+    refactor: use `orchestrator.clearDatabase` in tests
+
+commit dc3378f54513e749ec385a62b5f441e3e9e240f0
+Author: Thiago Cajaiba <thiago.cajaiba@gmail.com>
+Date:   Thu Jul 3 10:11:31 2025 -0300
+
+    test: rename all descriptions to use new pattern
+
+commit 50cc993aeea06533d54382a9ef7fea8f2e6f2678
+Author: Thiago Cajaiba <thiago.cajaiba@gmail.com>
+Date:   Thu Jul 3 09:55:36 2025 -0300
+
+    chore: add `--verbose` to `test:watch`
+```
+
+### Corrigindo erro após atualização do node-pg-migrate
+
+Mesmo o CI passando por todos os testes, as vezes o ambiente de produção pode rodar alguma coisa diferente e quebrar.
+
+Como o `node-pg-migrate` foi atualizado pra versão 7, o deploy na vercel **bugou**.
+
+```bash
+#Acessando o log na vercel
+Error: Can't get migration files: Error: ENOENT: no such file or directory, scandir 'infra/migrations/'
+    at async readdir (node:internal/fs/promises:949:18)
+```
+
+Isso porque é uma hospedagem Serverless (sem servidor), rodando dentro de uma Lambda (como se fossem apenas funções anonimas), pode ter perdido seu reconhecimento automatizado de caminhos e diretórios.
+
+```bash
+# alterado pages/api/v1/migrations/index.js
+# passando a usar o método resolve ao invés de join
+-      dir: join("infra", "migrations"),
++      dir: resolve("infra", "migrations"),
+```
