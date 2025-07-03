@@ -147,3 +147,7 @@ Isso porque é uma hospedagem Serverless (sem servidor), rodando dentro de uma L
 -      dir: join("infra", "migrations"),
 +      dir: resolve("infra", "migrations"),
 ```
+
+Pra resolver essa questão futuramente, é ideal adicionar ao projeto o recurso de `Monitoria`.
+
+> No momento em que o servidor emitir um erro, é disparada notificação para análise.
