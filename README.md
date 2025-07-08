@@ -62,3 +62,4 @@ A stack utiliza tecnologias amplamente adotadas no ecossistema JavaScript, facil
 - [35 - Manutenção - atualizando dependências](docs/35-manutencao-dependencias-e-correcoes-gerais.md)
 - [36 - Refatoração - realizando ajustes e padronização](docs/36-refatoracao-ajustes-e-padronizacao.md)
 - [37 - Refatoração - testes automatizados](docs/37-refatorando-testes-automatizados.md)
+- [38 - Novo jeito de aprender React](docs/38-novo-jeito-com-react.md)
