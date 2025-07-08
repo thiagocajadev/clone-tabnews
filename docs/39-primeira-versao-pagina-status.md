@@ -305,7 +305,7 @@ function UpdatedStatus() {
 
   // garante que o primeiro retorno sempre é a mensagem de carregamento
   // essa é uma boa prática muito recomendada
-  if (isLoading || !data) {
+  if (isLoading && !data) {
     return <div>Carregando...</div>;
   }
 
