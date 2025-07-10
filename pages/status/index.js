@@ -20,7 +20,7 @@ function UpdatedStatus() {
     refreshInterval: 2000,
   });
 
-  if (isLoading && !data) {
+  if (isLoading || !data) {
     return <div>Carregando...</div>;
   }
 
