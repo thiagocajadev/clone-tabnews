@@ -1,28 +1,40 @@
+class ValidationError extends Error {
+  constructor(message) {
+    super(message);
+    this.statusCode = 400;
+  }
+}
+
 function salvarUsuario(input) {
   if (!input) {
-    throw new Error("error-input-undefined");
+    throw new ReferenceError("É necessário enviar o 'input'.");
   }
 
   if (!input.name) {
-    throw new Error("error-name-undefined");
+    throw new ValidationError("Preencha seu nome completo.");
+  }
+
+  if (!input.username) {
+    throw new ValidationError("Preencha seu nome de usuário.");
+  }
+
+  if (!input.age) {
+    throw new ValidationError("Preencha sua idade.");
   }
 
   user.save(input);
 }
 
 try {
-  salvarUsuario({
-    name: "Thiago Carvalho",
-  });
+  salvarUsuario({});
 } catch (error) {
-  if (error.message === "error-input-undefined") {
-    console.log("É necessário enviar um 'input'.");
-    console.log(error.stack);
+  if (error instanceof ReferenceError) {
+    throw error;
   }
 
-  if (error.message === "error-name-undefined") {
-    console.log("É necessário enviar o 'name'.");
-    console.log(error.stack);
+  if (error instanceof ValidationError) {
+    console.log(error.statusCode);
+    return; // response.status(400).json(error);
   }
 
   console.log("Erro desconhecido");
