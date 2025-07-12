@@ -192,3 +192,202 @@ Error
 ```
 
 Analisando a mensagem de erro, a primeira sempre é o mais próximo de onde o erro foi gerado.
+
+## Padronizando a captura de erros
+
+Iniciando com um exemplo simples, já que qualquer coisa no try será capturada.
+
+```js
+function salvarUsuario(input) {
+  // se não informar a entrada, lança o erro
+  if (!input) {
+    throw "error-input-undefined";
+  }
+}
+
+try {
+  // como não foi informado o input, vai lançar a string de erro
+  salvarUsuario();
+} catch (error) {
+  console.log(typeof error.stack);
+  console.log(typeof error);
+}
+
+// saída
+❯ node teste.js
+undefined // não temos nada na stack, dificil analisar
+string
+```
+
+Comparando exatamente na captura o erro lançado para exibir na console
+
+```js
+function salvarUsuario(input) {
+  if (!input) {
+    throw "error-input-undefined";
+  }
+}
+
+try {
+  salvarUsuario();
+} catch (error) {
+  if (error === "error-input-undefined") {
+    console.log("É necessário enviar um 'input'.");
+  }
+}
+
+// saída
+❯ node teste.js
+É necessário enviar um 'input'.
+```
+
+> Se no salvarUsuario for enviado um objeto vazio, passa sem problemas na captura. Isso é um problema.
+
+Comparando se o objeto enviado possui a propriedade name
+
+```js
+function salvarUsuario(input) {
+  if (!input) {
+    throw "error-input-undefined";
+  }
+
+  if (!input.name) {
+    throw "error-name-undefined";
+  }
+}
+
+try {
+  salvarUsuario({});
+} catch (error) {
+  if (error === "error-input-undefined") {
+    console.log("É necessário enviar um 'input'.");
+  }
+
+  if (error === "error-name-undefined") {
+    console.log("É necessário enviar o 'name'.");
+  }
+}
+
+// saída
+❯ node teste.js
+É necessário enviar o 'name'.
+```
+
+Legal temos o problema, mas não temos a stack para indicar a origem do problema com essa abordagem.
+
+```js
+if (error === "error-name-undefined") {
+  console.log("É necessário enviar o 'name'.");
+  console.log(error.stack); // só retorna undefined, não ajudando em nada
+}
+```
+
+Pra resolver isso,o objeto **Error** do javascript que compartilha todos os pontos de lançamento de erro, detalhando onde estão sendo capturados os erros no código.
+
+```js
+function salvarUsuario(input) {
+  if (!input) {
+    // lança um novo objeto Error. O construtor dele aceita uma string como parâmetro
+    throw new Error("error-input-undefined");
+  }
+
+  if (!input.name) {
+    throw new Error("error-name-undefined");
+  }
+}
+
+try {
+  salvarUsuario({});
+} catch (error) {
+  // pra comparar a string, acessamos a propriedade message do objeto Error
+  if (error.message === "error-input-undefined") {
+    console.log("É necessário enviar um 'input'.");
+    console.log(error.stack);
+  }
+
+  if (error.message === "error-name-undefined") {
+    console.log("É necessário enviar o 'name'.");
+    console.log(error.stack);
+  }
+}
+
+// agora sim, na saída temos a stack
+❯ node teste.js
+É necessário enviar o 'name'.
+Error: error-name-undefined
+    at salvarUsuario (/home/thiago/git/clone-tabnews/teste.js:7:11) // linha 7, coluna 11 (qtd caracteres)
+    at Object.<anonymous> (/home/thiago/git/clone-tabnews/teste.js:12:3) // linha 12, coluna 3
+    // ...
+```
+
+> 💡 O VS Code mostra no rodapé qual linha e coluna está o cursor
+
+Agora uma falha grave!
+
+```js
+function salvarUsuario(input) {
+  if (!input) {
+    throw new Error("error-input-undefined");
+  }
+
+  if (!input.name) {
+    throw new Error("error-name-undefined");
+  }
+
+  // esse método não existe
+  user.save(input);
+}
+
+try {
+  // propriedade name preenchida
+  salvarUsuario({
+    name: "Thiago Carvalho",
+  });
+} catch (error) {
+  if (error.message === "error-input-undefined") {
+    console.log("É necessário enviar um 'input'.");
+    console.log(error.stack);
+  }
+
+  if (error.message === "error-name-undefined") {
+    console.log("É necessário enviar o 'name'.");
+    console.log(error.stack);
+  }
+}
+
+// não saiu nada na console
+❯ node teste.js
+```
+
+Temos ai um **erro engolido** pelo catch, ficando invisível no sistema! Em produção, caos já estaria instalado por completo.
+
+Pra resolver isso, podemos colocar uma condição genérica, fazendo o `runtime do javascript` pegar qualquer erro não tratado por último no catch.
+
+```js
+catch (error) {
+  if (error.message === "error-input-undefined") {
+    console.log("É necessário enviar um 'input'.");
+    console.log(error.stack);
+  }
+
+  if (error.message === "error-name-undefined") {
+    console.log("É necessário enviar o 'name'.");
+    console.log(error.stack);
+  }
+
+  // caso não tenha sido pego no tratamento específico, entra aqui
+  console.log("Erro desconhecido");
+  console.log(error.stack);
+}
+
+// saída
+❯ node teste.js
+Erro desconhecido
+ReferenceError: user is not defined // o método user é indefinido, pois não existe no código
+    at salvarUsuario (/home/thiago/git/clone-tabnews/teste.js:10:3)
+    at Object.<anonymous> (/home/thiago/git/clone-tabnews/teste.js:14:3)
+```
+
+### Melhorando os padrões com Custom Errors
+
+O tratamento está ficando mais profissional, mas é preciso centralizar o lançamento de erros e criar formas para evitar centenas de **IFs** repetitivos que validam apenas strings. Vou continuar em outro documento específico, esse tá gigante. 😃
