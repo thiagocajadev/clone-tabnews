@@ -63,3 +63,8 @@ A stack utiliza tecnologias amplamente adotadas no ecossistema JavaScript, facil
 - [36 - Refatoração - realizando ajustes e padronização](docs/36-refatoracao-ajustes-e-padronizacao.md)
 - [37 - Refatoração - testes automatizados](docs/37-refatorando-testes-automatizados.md)
 - [38 - Novo jeito de aprender React](docs/38-novo-jeito-com-react.md)
+- [39 - Primeira versão da página de status](docs/39-primeira-versao-pagina-status.md)
+- [40 - Tratamento de erros - Parte 1](docs/40-tratamento-de-erros-parte-1.md)
+- [41 - Tratamento de erros - Parte 2](docs/41-tratamento-de-erros-parte-2.md)
+- [42 - Tratamento de erros - Parte 3](docs/42-tratamento-de-erros-parte-3.md)
+- [43 - Padronizando Controllers](docs/43-padronizando-controllers.md)
