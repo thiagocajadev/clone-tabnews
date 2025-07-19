@@ -67,4 +67,6 @@ A stack utiliza tecnologias amplamente adotadas no ecossistema JavaScript, facil
 - [40 - Tratamento de erros - Parte 1](docs/40-tratamento-de-erros-parte-1.md)
 - [41 - Tratamento de erros - Parte 2](docs/41-tratamento-de-erros-parte-2.md)
 - [42 - Tratamento de erros - Parte 3](docs/42-tratamento-de-erros-parte-3.md)
-- [43 - Padronizando Controllers](docs/43-padronizando-controllers.md)
+- [43 - Padronizando Controllers - Parte 1](docs/43-padronizando-controllers-parte1.md)
+- [44 - Padronizando Controllers - Parte 2](docs/44-padronizando-controllers-parte2.md)
+- [45 - Criando a model Migrator](docs/45-criando-a-model-migrator.md)
