@@ -70,3 +70,4 @@ A stack utiliza tecnologias amplamente adotadas no ecossistema JavaScript, facil
 - [43 - Padronizando Controllers - Parte 1](docs/43-padronizando-controllers-parte1.md)
 - [44 - Padronizando Controllers - Parte 2](docs/44-padronizando-controllers-parte2.md)
 - [45 - Criando a model Migrator](docs/45-criando-a-model-migrator.md)
+- [46- Criando a migration Users](docs/46-criando-migration-users.md)
