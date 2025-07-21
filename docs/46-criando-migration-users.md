@@ -178,3 +178,8 @@ console.log
       }
     ]
 ```
+
+Então basta seguir essa linha de raciocínio, escolhendo o tipo de dado mais adequado para cada coluna da tabela.
+
+> 💡 No caso colunas registrando a data e hora de criação, preferencialmente
+> use TIMESTAMP UTC, evitando problemas futuros com fuso horários
