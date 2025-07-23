@@ -72,3 +72,4 @@ A stack utiliza tecnologias amplamente adotadas no ecossistema JavaScript, facil
 - [45 - Criando a model Migrator](docs/45-criando-a-model-migrator.md)
 - [46 - Criando a migration Users](docs/46-criando-migration-users.md)
 - [47 - Regras de negócio model User](docs/47-regras-de-negocio-mode-user.md)
+- [48 - Criando rota dinâmica](docs/48-criando-rota-dinamica.md)
