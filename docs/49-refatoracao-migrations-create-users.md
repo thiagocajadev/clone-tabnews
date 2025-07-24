@@ -67,7 +67,8 @@ Finalizado o ajuste, rodar:
 
 ```bash
 # mescla o commit com as alterações
-git commit --amend pra mesclar
+# obs: é aberto arquivo para editar a mensagem, só fechar
+git commit --amend
 
 # junta e reorganiza os commits
 git rebase --continue
