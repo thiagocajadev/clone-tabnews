@@ -75,3 +75,7 @@ A stack utiliza tecnologias amplamente adotadas no ecossistema JavaScript, facil
 - [48 - Criando rota dinâmica](docs/48-criando-rota-dinamica.md)
 - [49 - Refatoração Migration create users](docs/49-refatoracao-migrations-create-users.md)
 - [50 - Trabalhando com senhas](docs/50-trabalhando-com-senhas.md)
+- [51 - Refatorando senhas](docs/51-refatorando-senhas.md)
+- [52 - Atualizando um usuário - Parte 1](docs/52-atualizando-um-usuario-parte-1.md)
+- [53 - Atualizando um usuário - Parte 2](docs/53-atualizando-um-usuario-parte-2.md)
+- [54 - Mocks utilizando faker.js](docs/54-Mocks-utilizando-fakerjs.md)
