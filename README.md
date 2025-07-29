@@ -74,3 +74,4 @@ A stack utiliza tecnologias amplamente adotadas no ecossistema JavaScript, facil
 - [47 - Regras de negócio model User](docs/47-regras-de-negocio-mode-user.md)
 - [48 - Criando rota dinâmica](docs/48-criando-rota-dinamica.md)
 - [49 - Refatoração Migration create users](docs/49-refatoracao-migrations-create-users.md)
+- [50 - Trabalhando com senhas](docs/50-trabalhando-com-senhas.md)
