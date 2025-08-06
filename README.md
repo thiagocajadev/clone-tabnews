@@ -82,3 +82,4 @@ A stack utiliza tecnologias amplamente adotadas no ecossistema JavaScript, facil
 - [55 - Autenticação e Autorização - Parte 1](docs/55-autenticacao-e-autorizacao-parte-1.md)
 - [56 - Autenticação e Autorização - Parte 2](docs/55-autenticacao-e-autorizacao-parte-2.md)
 - [57 - Autenticação com Session Cookie](docs/57-autenticacao-session-cookie.md)
+- [58 - Autenticando via Endpoint user](docs/58-autenticando-via-endpoint-user.md)
