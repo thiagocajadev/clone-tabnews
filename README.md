@@ -86,3 +86,4 @@ A stack utiliza tecnologias amplamente adotadas no ecossistema JavaScript, facil
 - [59 - Fake Timers - Expirando a Sessão](docs/59-fake-timers-expirando-sessao.md)
 - [60 - Renovando a Sessão](docs/60-renovando-a-sessao.md)
 - [61 - Lidando com ETag e Cache-Control](docs/61-etag-e-cache-control.md)
+- [62 - Fazendo logout da Sessão](docs/62-fazendo-logout-da-sessao.md)
