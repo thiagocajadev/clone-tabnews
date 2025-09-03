@@ -88,3 +88,5 @@ A stack utiliza tecnologias amplamente adotadas no ecossistema JavaScript, facil
 - [61 - Lidando com ETag e Cache-Control](docs/61-etag-e-cache-control.md)
 - [62 - Fazendo logout da Sessão](docs/62-fazendo-logout-da-sessao.md)
 - [63 - Trabalhando com Emails](docs/63-trabalhando-com-emails.md)
+- [64 - Trabalhando com Emails](docs/64-criando-o-email.js.md)
+- [65 - Trabalhando com Emails](docs/65-teste-de-email.md)
