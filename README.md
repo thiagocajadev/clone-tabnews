@@ -90,5 +90,6 @@ A stack utiliza tecnologias amplamente adotadas no ecossistema JavaScript, facil
 - [63 - Trabalhando com Emails - Parte 1](docs/63-trabalhando-com-emails.md)
 - [64 - Trabalhando com Emails - Parte 2](docs/64-criando-o-email.js.md)
 - [65 - Trabalhando com Emails - Parte 3](docs/65-teste-de-email.md)
-- [66 - Autorização - Coluna features em users - Parte 1](docs/66-autorizacao-features-em-users-parte-1.md)
-- [66 - Autorização - Coluna features em users - Parte 2](docs/66-autorizacao-features-em-users-parte-2.md)
+- [66 - Autorização - features em users - Parte 1](docs/66-autorizacao-features-em-users-parte-1.md)
+- [67 - Autorização - features em users - Parte 2](docs/66-autorizacao-features-em-users-parte-2.md)
+- [68 - Autorização - features em users - Parte 3](docs/66-autorizacao-features-em-users-parte-3.md)
