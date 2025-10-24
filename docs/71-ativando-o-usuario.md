@@ -109,3 +109,96 @@ async function findOneValidById(tokenId) {
 ```
 
 Agora temos um código mais assertivo em relação ao token válido de ativação.
+
+# Ativando a conta
+
+Vamos analisar o fluxo de ativação:
+
+![Ativando o usuário](img/ativando-o-usuario.png)
+
+1. É realizado uma requisição `HTTP` do tipo `POST` contra o endpoint `/api/v1/users`.
+
+1. O usuário é criado, retornando um e-mail com o link de ativação (status `201 - created`).
+
+1. Ao acessar o link de ativação, é feita uma requisição `HTTP` do tipo `PATCH` (atualização) contra o endpoint `api/v1/activations/[token_id]`.
+
+1. Assim que o usuário é ativado, é preenchida a data em que o token foi usado `used_at` no banco de dados, evitando o reuso desse token.
+
+1. Após ativação, o usuário recebe novas features em seu perfil.
+
+1. E finalmente, o usuário pode fazer login na aplicação.
+
+## Ajustando o teste
+
+Elevamos o activationTokenId para uso em mais testes.
+
+```js
+// Trecho de tests/integration/_use-cases/registration-flow.test.js
+describe("Use case: Registration Flow (all successful)", () => {
+  let createUserResponseBody;
+  let activationTokenId;
+  // demais códigos...
+}
+```
+
+Teste de ativação de conta
+
+```js
+test("Activate account", async () => {
+  // Endpoint que foi representado na imagem acima, atualizando a data de uso do token
+  const activationResponse = await fetch(
+    `http://localhost:3000/api/v1/activations/${activationTokenId}`,
+    {
+      method: "PATCH",
+    },
+  );
+
+  expect(activationResponse.status).toBe(200);
+
+  const activationResponseBody = await activationResponse.json();
+
+  expect(Date.parse(activationResponseBody.used_at)).not.toBeNaN();
+
+  // Após ativação, o usuário possui apenas a feature para criar sessão
+  const activatedUser = await user.findOneByUsername("RegistrationFlow");
+  expect(activatedUser.features).toEqual(["create:session"]);
+});
+```
+
+## Criando a rota com segmento dinâmico
+
+Essa rota já foi mostrada nos testes, `api/v1/activations/[token_id]`. Hora de criar a estrutura. Por dentro do controller, será recuperado o UUID do token.
+
+```js
+// Trecho de pages/api/v1/activations/[token_id]/index.js
+import { createRouter } from "next-connect";
+import controller from "infra/controller";
+import activation from "models/activation.js";
+
+const router = createRouter();
+
+// Temos apenas a rota para fazer o patch (atualização)
+router.patch(patchHandler);
+
+export default router.handler(controller.errorHandlers);
+
+async function patchHandler(request, response) {
+  // Recupera o token passado na URL
+  const activationTokenId = request.query.token_id;
+
+  // Recupera o token válido
+  const validActivationToken =
+    await activation.findOneValidById(activationTokenId);
+
+  // Atualiza a data de uso do token
+  const usedActivationToken =
+    await activation.markTokenAsUsed(activationTokenId);
+
+  // Ativa o usuário, alterando suas features padrão
+  await activation.activateUserByUserId(validActivationToken.user_id);
+
+  return response.status(200).json(usedActivationToken);
+}
+```
+
+E ta ai, PIMBA! temos a ativação concluída.
