@@ -95,3 +95,4 @@ A stack utiliza tecnologias amplamente adotadas no ecossistema JavaScript, facil
 - [68 - Autorização - Permissões](docs/68-autorizacao-permissoes.md)
 - [69 - Autorização - Enviando e-mail de ativação](docs/69-enviando-email-de-ativacao.md)
 - [70 - Autorização - Criando token de ativação](docs/70-criando-token-de-ativacao.md)
+- [71 - Autorização - Ativando o usuário](docs/71-ativando-o-usuario.md)
