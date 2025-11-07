@@ -313,4 +313,4 @@ function injectAnonymousUser(request) {
     Received: 403
 ```
 
-É isso ai! Estamos bem perto do model Authorization, apenas extrair a lógica e extender ela. O próximo passo será checar se o **usuário alvo**, o que é o detentor do email e senha, possui a feature de criar sessões.
+É isso ai! Estamos bem perto do model Authorization, apenas extrair a lógica e estender ela. O próximo passo será checar se o **usuário alvo**, o que é o detentor do email e senha, possui a feature de criar sessões.
