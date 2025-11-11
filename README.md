@@ -99,3 +99,4 @@ A stack utiliza tecnologias amplamente adotadas no ecossistema JavaScript, facil
 - [72 - Autorização - Injeção de Middlewares](docs/72-injecao-de-middlewares.md)
 - [73 - Model Authorization](docs/73-model-authorization.md)
 - [74 - Restringindo o Endpoint /user](docs/74-restringindo-endpoint-user.md)
+- [75 - Bloqueando o Endpoint /activations/[token_id]](docs/75-bloqueando-endpoint-activations.md)
