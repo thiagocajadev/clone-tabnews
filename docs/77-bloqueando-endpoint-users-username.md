@@ -1,16 +1,46 @@
-import { version as uuidVersion } from "uuid";
-import orchestrator from "tests/orchestrator.js";
+# Sofisticando o Authorization
+
+Para deixar o model `authorization` mais sofisticado, temos que trazer pra dentro o `resource`, o recurso alvo, levando em consideração o controle de acesso. Caso o usuário queira alterar o seu próprio nome de usuário ou email, isso será fundamental.
+
+## Bloqueando `/users/[username]`
+
+> "É mais importante termos o poder de `mudar` as coisas do que conseguir `criar` as coisas da primeira vez." — Filipe Deschamps.
+
+Um sistema desacoplado é bom por isso. Nada está escrito em pedra e temos flexibilidade para modificar sem problemas maiores.
+
+Teste filtrado apenas para a rota com `patch`:
+
+```bash
+npm run test:watch -- --runTestsByPath tests/integration/api/v1/users/[username]/patch.test.js
+```
+
+Atualizando a rota que atualiza o username, colocando barreiras.
+
+```js
+// trecho de pages/api/v1/users/[username]/index.js
+import { createRouter } from "next-connect";
+import controller from "infra/controller";
 import user from "models/user.js";
-import password from "models/password.js";
 
-beforeAll(async () => {
-  await orchestrator.waitForAllServices();
-  await orchestrator.clearDatabase();
-  await orchestrator.runPendingMigrations();
-});
+const router = createRouter();
 
+// Aqui colocamos a barreira, exigindo que o usuário tenha a feature update:user
+// O usuário anonimo não tem esse recurso, logo o teste retorna 403 - proibido.
+router.use(controller.injectAnonymousOrUser);
+router.get(getHandler);
+router.patch(controller.canRequest("update:user"), patchHandler);
+```
+
+Os testes iram falhar, pois o usuário anonimo não possui a feature para `update:user`. Essa é uma situação complicada. Já pensou qualquer um acessar um sistema de forma anonima e ter o poder de atualizar dados de um usuário 🤣?
+
+## Atualizando os testes
+
+```js
+// trecho de tests/integration/api/v1/users/[username]/patch.test.js
 describe("PATCH /api/v1/users/[username]", () => {
+  // Primeiro duplicamos o teste, passando o usuário anônimo.
   describe("Anonymous user", () => {
+    // Obs: Caso queria pular o teste, utilize "test.skip".
     test("With unique 'username'", async () => {
       const createdUser = await orchestrator.createUser();
 
@@ -40,7 +70,9 @@ describe("PATCH /api/v1/users/[username]", () => {
     });
   });
 
+  // Agora testando com um usuário padrão. Criado, ativado e recuperando sua sessão.
   describe("Default user", () => {
+    // Obs: Para testar individualmente cada caso de teste, utilize "test.only".
     test("With nonexistent 'username'", async () => {
       const createdUser = await orchestrator.createUser();
       const activatedUser = await orchestrator.activateUser(createdUser);
@@ -51,7 +83,7 @@ describe("PATCH /api/v1/users/[username]", () => {
         {
           method: "PATCH",
           headers: {
-            Cookie: `session_id=${sessionObject.token}`,
+            Cookie: `session_id=${sessionObject.token}`, // passando o token no cabeçalho
           },
         },
       );
@@ -73,6 +105,7 @@ describe("PATCH /api/v1/users/[username]", () => {
         username: "user1",
       });
 
+      // Simulando o user2 tentando alterar seu nome para user1.
       const createdUser2 = await orchestrator.createUser({
         username: "user2",
       });
@@ -168,6 +201,7 @@ describe("PATCH /api/v1/users/[username]", () => {
 
       const responseBody = await response.json();
 
+      // Adicionado recurso "update:user" para atender ao teste.
       expect(responseBody).toEqual({
         id: responseBody.id,
         username: "uniqueUser2",
@@ -208,6 +242,7 @@ describe("PATCH /api/v1/users/[username]", () => {
 
       const responseBody = await response.json();
 
+      // Adicionado recurso "update:user" para atender ao teste.
       expect(responseBody).toEqual({
         id: responseBody.id,
         username: createdUser.username,
@@ -248,6 +283,7 @@ describe("PATCH /api/v1/users/[username]", () => {
 
       const responseBody = await response.json();
 
+      // Adicionado recurso "update:user" para atender ao teste.
       expect(responseBody).toEqual({
         id: responseBody.id,
         username: createdUser.username,
@@ -280,3 +316,15 @@ describe("PATCH /api/v1/users/[username]", () => {
     });
   });
 });
+```
+
+```js
+// trecho de models/activation.js
+// Adicionado recurso para permitir atualização do usuário diretamente no model.
+const activatedUser = await user.setFeatures(userId, [
+  "create:session",
+  "read:session",
+  "update:user",
+]);
+return activatedUser;
+```
