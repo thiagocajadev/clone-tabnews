@@ -103,3 +103,4 @@ A stack utiliza tecnologias amplamente adotadas no ecossistema JavaScript, facil
 - [76 - Bloqueando o Endpoint /users](docs/76-bloqueando-endpoint-users.md)
 - [77 - Bloqueando o Endpoint /users/[username]](docs/77-bloqueando-endpoint-users-username.md)
 - [78 - Considerando recursos na Autorização](docs/78-considerando-recursos-no-authorization.md)
+- [79 - Super Features e Usuários Privilegiados](docs/79-super-features-e-usuarios-privilegiados.md)
