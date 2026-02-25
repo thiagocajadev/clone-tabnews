@@ -16,24 +16,50 @@ function can(user, feature, resource) {
   return authorized;
 }
 
-function filterOutput(user, feature, output) {
+function filterOutput(user, feature, resource) {
   if (feature === "read:user") {
     return {
-      id: output.id,
-      username: output.username,
-      features: output.features,
-      created_at: output.created_at,
-      updated_at: output.updated_at,
+      id: resource.id,
+      username: resource.username,
+      features: resource.features,
+      created_at: resource.created_at,
+      updated_at: resource.updated_at,
     };
   }
 
-  if (feature === "update:user") {
+  if (feature === "read:user:self") {
+    if (user.id === resource.id) {
+      return {
+        id: resource.id,
+        username: resource.username,
+        features: resource.features,
+        created_at: resource.created_at,
+        updated_at: resource.updated_at,
+      };
+    }
+  }
+
+  if (feature === "read:session") {
+    if (user.id === resource.user_id) {
+      return {
+        id: resource.id,
+        token: resource.token,
+        user_id: resource.user_id,
+        created_at: resource.created_at,
+        updated_at: resource.updated_at,
+        expires_at: resource.expires_at,
+      };
+    }
+  }
+
+  if (feature === "read:activation_token") {
     return {
-      id: output.id,
-      username: output.username,
-      features: output.features,
-      created_at: output.created_at,
-      updated_at: output.updated_at,
+      id: resource.id,
+      user_id: resource.user_id,
+      created_at: resource.created_at,
+      updated_at: resource.updated_at,
+      expires_at: resource.expires_at,
+      used_at: resource.used_at,
     };
   }
 }

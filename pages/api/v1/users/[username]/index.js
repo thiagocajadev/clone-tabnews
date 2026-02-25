@@ -45,7 +45,7 @@ async function patchHandler(request, response) {
 
   const secureOutputValues = authorization.filterOutput(
     userTryingToPatch,
-    "update:user",
+    "read:user",
     updatedUser,
   );
 
