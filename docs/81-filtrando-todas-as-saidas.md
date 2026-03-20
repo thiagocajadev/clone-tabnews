@@ -172,7 +172,7 @@ Tudo ok!
 Agora só aplicar a mesma lógica no `PatchHandler` para o filtro de saída.
 
 ```js
-// Trechod e pages/api/v1/activations/[token_id]/index.js
+// Trecho de pages/api/v1/activations/[token_id]/index.js
 const secureOutputValues = authorization.filterOutput(
   userTryingToPatch,
   "read:activation_token",
