@@ -107,3 +107,4 @@ A stack utiliza tecnologias amplamente adotadas no ecossistema JavaScript, facil
 - [80 - Filtrando a saída em GET users/[username]](docs/80-filtrando-a-saida-em-get-users-username.md)
 - [81 - Filtrando todas as saídas](docs/81-filtrando-todas-as-saidas.md)
 - [82 - Desafio - Endpoints migration e status](docs/82-desafio-migrations-e-status.md)
+- [83 - Validações iniciais em Authorization](docs/83-adicionando-validacoes-authorization.md)
