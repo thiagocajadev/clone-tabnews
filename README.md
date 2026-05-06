@@ -109,3 +109,4 @@ A stack utiliza tecnologias amplamente adotadas no ecossistema JavaScript, facil
 - [82 - Desafio - Endpoints migration e status](docs/82-desafio-migrations-e-status.md)
 - [83 - Validações iniciais em Authorization](docs/83-adicionando-validacoes-authorization.md)
 - [84 - Atualizar Node.js para 24 LTS](docs/84-atualizacao-node-24-lts.md)
+- [85 - Rodando Migrations](docs/85-rodando-migrations.md)
