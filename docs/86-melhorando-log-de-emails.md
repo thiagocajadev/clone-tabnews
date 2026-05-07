@@ -68,3 +68,96 @@ export class ServiceError extends Error {
 ```
 
 Isso deve contribuir com a visibilidade do que está acontecendo, com mais metadados.
+
+Agora um teste via console do navegador, contra o endpoint que crie um usuário e envia o e-mail de confirmação:
+
+```js
+fetch("api/v1/users", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    username: "test3",
+    password: "test",
+    email: "test3@test.com",
+  }),
+});
+```
+
+Gerado novo erro 500, vamos olhar os logs:
+
+```bash
+action: 'Entre em contato com o suporte.',
+statusCode: 500,
+[cause]: n [ServiceError]: Não foi possível enviar e-mail
+```
+
+Maravilha, erro 500 com contexto.
+
+## Repensando o fluxo de cadastro de usuários
+
+Hoje o fluxo é assim:
+
+1. Cadastro de usuário
+2. Criação do token de ativação
+3. E-mail com token de ativação
+4. Ativação efetivada
+5. Elevar privilégio
+
+Então, testando vamos colar o token gerado no log só pra ver se cria o usuário mesmo.
+
+```js
+fetch("api/v1/activations/5a576b36-1f1d-41aa-9927-fe66c4e60f81", {
+  method: "PATCH",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    username: "test3",
+    password: "test",
+    email: "test3@test.com",
+  }),
+});
+```
+
+E sucesso, usuário criado no banco de dados de staging na Neon!
+
+![Detalhes do usuário criado o no banco de dados](img/usuario-criado-em-staging-neon.png)
+
+## Atribuindo permissão na marretada
+
+Aproveitando que estamos na conexão no banco, vamos adicionar permissões de usuário privilegiado.
+
+```sql
+-- Nota: Nunca faça update sem where, aqui atualiza todos os usuários do banco.
+UPDATE users SET features = array_append(features, 'read:status:all')
+```
+
+E agora os usuários tem privilégios anexados representados assim no banco:
+
+{create:session,read:session,update:user,read:status:all}
+
+## Testando se o usuário é privilegiado mesmo
+
+Agora continuando os testes no navegador, vamos ver se o usuário consegue criar a sessão e ter acesso a versão do Postgres. Somente
+usuários privilegiados conseguem ler essa informação.
+
+```js
+fetch("api/v1/sessions", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    password: "test",
+    email: "test3@test.com",
+  }),
+});
+```
+
+Olhando em network, retorna 201 -> created! E em application -> cookies, temos o cookie de sessão.
+
+Agora testando o status, só dando refresh em ap/v1/status e olha só: "version": "16.12 (761f46d)" é retornado!
+
+É isso ai! Próxima parada: enviar o email de verdade!
