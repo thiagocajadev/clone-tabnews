@@ -110,3 +110,5 @@ A stack utiliza tecnologias amplamente adotadas no ecossistema JavaScript, facil
 - [83 - Validações iniciais em Authorization](docs/83-adicionando-validacoes-authorization.md)
 - [84 - Atualizar Node.js para 24 LTS](docs/84-atualizacao-node-24-lts.md)
 - [85 - Rodando Migrations](docs/85-rodando-migrations.md)
+- [86 - Melhorando log de e-mails](docs/86-melhorando-logs-de-emails.md)
+- [87 - O que realmente é SPF, DKIM e DMARC?](docs/87-spf-dkim-dmarc.md)
