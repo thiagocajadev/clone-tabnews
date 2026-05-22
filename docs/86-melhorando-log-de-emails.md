@@ -78,7 +78,7 @@ fetch("api/v1/users", {
     "Content-Type": "application/json",
   },
   body: JSON.stringify({
-    username: "test3",
+    username: "test",
     password: "test",
     email: "test3@test.com",
   }),
