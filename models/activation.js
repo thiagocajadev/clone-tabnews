@@ -65,20 +65,20 @@ async function create(userId) {
 
 async function sendEmailToUser(user, activationToken) {
   await email.send({
-    from: "FinTab <contato@fintab.com.br>",
+    from: `CursoPontoDev <${process.env.EMAIL_FROM}>`,
     to: user.email,
-    subject: "Ative seu cadastro no FinTab!",
+    subject: "Ative seu cadastro no CursoPontoDev!",
     text: createEmailText(),
   });
 
   function createEmailText() {
     return `
-    ${user.username}, clique no link abaixo para ativar seu cadastro no FinTab
+    ${user.username}, clique no link abaixo para ativar seu cadastro no CursoPontoDev - Projeto de Estudos
 
     ${webserver.origin}/cadastro/ativar/${activationToken.id}
 
     Atenciosamente,
-    Equipe FinTab.
+    Equipe CursoPontoDev - Projeto de Estudos.
     `;
   }
 }
