@@ -136,7 +136,7 @@ Dessa forma, garantimos que o valor retornado é realmente uma data ISO válida 
 
 **Red, Green, Refactor (RGR)** é uma abordagem comum no desenvolvimento orientado a testes (TDD), seguindo um ciclo simples:
 
-![Red, Green, Refactor](docs/img/rgr-red-green-refactor.png)
+![Red, Green, Refactor](img/rgr-red-green-refactor.png)
 
 ### Os 3 passos do ciclo:
 

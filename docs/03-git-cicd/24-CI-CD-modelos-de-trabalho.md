@@ -205,7 +205,7 @@ Simples assim.
 
 Então, podemos criar uma branch de release, protegendo a versão que vai pra produção sem travar o time que continua desenvolvendo.
 
-![Branch release](img/branch-release-nao-travando-trunk.png.png)
+![Branch release](img/branch-release-nao-travando-trunk.png)
 
 Objetivos:
 
