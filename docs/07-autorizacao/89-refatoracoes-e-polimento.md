@@ -217,25 +217,25 @@ expect(diff).toBeLessThanOrEqual(
 
 ## Dependências `patch` e `minor`
 
-| Pacote | Antes | Depois |
-|---|---|---|
-| `bcryptjs` | 3.0.2 | 3.0.3 |
-| `cookie` | 1.0.2 | 1.1.1 |
-| `pg` | 8.12.0 | 8.21.0 |
-| `swr` | 2.2.5 | 2.4.1 |
-| `husky` | 9.1.4 | 9.1.7 |
-| `prettier` | 3.3.3 | 3.8.3 |
+| Pacote     | Antes  | Depois |
+| ---------- | ------ | ------ |
+| `bcryptjs` | 3.0.2  | 3.0.3  |
+| `cookie`   | 1.0.2  | 1.1.1  |
+| `pg`       | 8.12.0 | 8.21.0 |
+| `swr`      | 2.2.5  | 2.4.1  |
+| `husky`    | 9.1.4  | 9.1.7  |
+| `prettier` | 3.3.3  | 3.8.3  |
 
 ## Dependências `major`
 
 Versões `major` que não exigiram mudança nenhuma no código:
 
-| Pacote | Antes | Depois |
-|---|---|---|
-| `jest` | 29.7.0 | 30.4.2 |
-| `set-cookie-parser` | 2.7.1 | 3.1.0 |
-| `concurrently` | 8.2.2 | 9.2.1 |
-| `@commitlint/cli` | 19.4.0 | 20.5.3 |
+| Pacote                            | Antes  | Depois |
+| --------------------------------- | ------ | ------ |
+| `jest`                            | 29.7.0 | 30.4.2 |
+| `set-cookie-parser`               | 2.7.1  | 3.1.0  |
+| `concurrently`                    | 8.2.2  | 9.2.1  |
+| `@commitlint/cli`                 | 19.4.0 | 20.5.3 |
 | `@commitlint/config-conventional` | 19.2.2 | 20.5.3 |
-| `dotenv-expand` | 11.0.6 | 12.0.3 |
-| `nodemailer` | 7.0.5 | 8.0.7 |
+| `dotenv-expand`                   | 11.0.6 | 12.0.3 |
+| `nodemailer`                      | 7.0.5  | 8.0.7  |
