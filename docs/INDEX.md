@@ -108,3 +108,4 @@
 - [86 - Melhorando log de e-mails](07-autorizacao/86-melhorando-log-de-emails.md)
 - [87 - O que realmente é SPF, DKIM e DMARC?](07-autorizacao/87-spf-dkim-dmarc.md)
 - [88 - Configurando email na Resend](07-autorizacao/88-configurando-email-resend.md)
+- [89 - Refatorações e Polimento](07-autorizacao/89-refatoracoes-e-polimento.md)

@@ -4,6 +4,8 @@ on: pull_request
 
 jobs:
   jest:
+    permissions:
+      contents: read
     name: Jest Ubuntu
     runs-on: ubuntu-latest
     steps:

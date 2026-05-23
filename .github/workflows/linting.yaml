@@ -6,6 +6,8 @@ jobs:
   prettier:
     name: Prettier
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v4
 
@@ -19,6 +21,8 @@ jobs:
   eslint:
     name: Eslint
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v4
 
@@ -32,6 +36,8 @@ jobs:
   commitlint:
     name: Commitlint
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v4
         with:
