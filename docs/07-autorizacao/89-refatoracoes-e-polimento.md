@@ -36,7 +36,7 @@ return response.status(200).json(secureOutputValues);
 
 ## Backticks nas descrições de testes
 
-Quando o nome de um campo aparece na descrição do `test()`, usamos backtick em vez de aspas simples — fica claro que é um identificador de código. Ajustamos `patch.test.js` e `post.test.js` em `users`.
+Quando o nome de um campo aparece na descrição do `test()`, usamos backtick em vez de aspas simples: fica claro que é um identificador de código. Ajustamos `patch.test.js` e `post.test.js` em `users`.
 
 ```js
 // Antes
@@ -48,7 +48,7 @@ test("With unique `username`", ...)
 
 ## `${webserver.origin}` nos testes
 
-Os testes tinham `http://localhost:3000` fixo em vários lugares. O módulo `infra/webserver.js` já resolve o endereço certo por ambiente — basta usá-lo. Todos os arquivos de teste e o `orchestrator.js` foram atualizados.
+Os testes tinham `http://localhost:3000` fixo em vários lugares. O módulo `infra/webserver.js` já resolve o endereço certo por ambiente, então basta usá-lo. Todos os arquivos de teste e o `orchestrator.js` foram atualizados.
 
 ```js
 import webserver from "infra/webserver.js";
@@ -72,7 +72,7 @@ Em produção a Vercel injeta as variáveis de ambiente diretamente. `dotenv` e 
 
 ## `async` em `setSessionCookie()` e `clearSessionCookie()`
 
-Essas funções só fazem operações síncronas — serializar um cookie e setar um header. Sem `await` dentro, o `async` não faz sentido.
+Essas funções só fazem operações síncronas: serializar um cookie e setar um header. Sem `await` dentro, o `async` não faz sentido.
 
 ```js
 // infra/controller.js
@@ -92,7 +92,7 @@ updated_at: "2026-01-01T00:00:00.000Z",
 
 ## "Running" em `POST /api/v1/migrations`
 
-`POST /api/v1/migrations` executa as migrations — não apenas as lista. "Running" descreve melhor o que acontece.
+`POST /api/v1/migrations` executa as migrations, não apenas as lista. "Running" descreve melhor o que acontece.
 
 ```js
 // tests/integration/api/v1/migrations/post.test.js
@@ -185,7 +185,7 @@ describe("Default user", () => {
 
 ## `SameSite=Lax` no cookie
 
-`SameSite=Lax` bloqueia o envio do cookie em requisições cross-site iniciadas por terceiros — proteção contra CSRF. Com `Lax`, o cookie ainda vai em navegações normais como clicar em um link. Os testes de `POST /api/v1/sessions` e `GET /api/v1/user` foram atualizados para esperar `sameSite: "Lax"`.
+`SameSite=Lax` bloqueia o envio do cookie em requisições cross-site iniciadas por terceiros, o que protege contra CSRF. Com `Lax`, o cookie ainda vai em navegações normais como clicar em um link. Os testes de `POST /api/v1/sessions` e `GET /api/v1/user` foram atualizados para esperar `sameSite: "Lax"`.
 
 ```js
 // infra/controller.js
