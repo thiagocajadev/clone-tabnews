@@ -1,6 +1,6 @@
 # Refatorações e polimento
 
-Vamos fazer uma rodada de ajustes pontuais no projeto — renomear funções, remover código desnecessário, padronizar testes e atualizar dependências.
+Vamos fazer uma rodada de ajustes pontuais no projeto: renomear funções, remover código desnecessário, padronizar testes e atualizar dependências.
 
 ## `authentication.getUser()`
 
