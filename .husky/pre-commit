@@ -1,1 +1,2 @@
+npm run lint:prettier:check
 npm run lint:eslint:check
