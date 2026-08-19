@@ -109,3 +109,10 @@
 - [87 - O que realmente é SPF, DKIM e DMARC?](07-autorizacao/87-spf-dkim-dmarc.md)
 - [88 - Configurando email na Resend](07-autorizacao/88-configurando-email-resend.md)
 - [89 - Refatorações e Polimento](07-autorizacao/89-refatoracoes-e-polimento.md)
+
+## Frontend
+
+- [90 - React parece um motor de jogo](08-frontend/90-react-motor-de-jogo.md)
+- [91 - React O contador que não conta](08-frontend/91-react-o-contador-que-nao-conta.md)
+- [92 - Como manter a memória](08-frontend/92-como-manter-a-memoria.md)
+- [93 - O problema da identidade por referência em React](08-frontend/93-problema-identidade-por-referencia.md)
