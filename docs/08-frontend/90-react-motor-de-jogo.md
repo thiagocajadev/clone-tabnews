@@ -6,7 +6,7 @@ E ele começou muito bem, popularizando o **Virtual DOM** (Document Object Model
 
 ## E qual o diferencial do React?
 
-Hoje em dia, várias bibliotecas usam Virtual DOM, então isso não é mais um diferencial. O diferencial do React é que ele é uma **biblioteca reativa**. 
+Hoje em dia, várias bibliotecas usam Virtual DOM, então isso não é mais um diferencial. O diferencial do React é que ele é uma **biblioteca reativa**.
 
 Listando as coisas que tornam o React único:
 
@@ -36,10 +36,10 @@ Comparando DSLs:
 ```js
 // Um exemplo em React. Veja que usamos apenas JS. Quase puro, pois retornamos componentes React.
 
-if(isLoggedIn) {
-    return <Dashboard />
+if (isLoggedIn) {
+  return <Dashboard />;
 } else {
-    return <Login />
+  return <Login />;
 }
 ```
 
@@ -56,10 +56,10 @@ Closures são funções que lembram do ambiente em que foram criadas, mesmo depo
 ```js
 function makeCounter() {
   let count = 0;
-  
-  return function() {
+
+  return function () {
     return count++;
-  }
+  };
 }
 
 const counter = makeCounter();
@@ -77,12 +77,13 @@ Aqui nos vamos ter 3 fases do ciclo:
 **Trigger** -> **Render** -> **Commit**
 
 **Trigger**: É o gatilho. É o que da a faísca pra iniciar o ciclo. Esse trigger pode ser:
-* Uma mudança de estado
-* Uma mudança de props
-* Um evento do usuário
-* Uma chamada de API
-* Um timeout
-* Um interval
+
+- Uma mudança de estado
+- Uma mudança de props
+- Um evento do usuário
+- Uma chamada de API
+- Um timeout
+- Um interval
 
 **Render**: É a fase onde o React vai re-renderizar (atualizar) os componentes. Ele vai chamar as funções dos componentes e vai gerar o Virtual DOM.
 
@@ -95,7 +96,7 @@ Além das closures, outro conceito muito importante para entender o React é a *
 Em JavaScript, valores primitivos (`string`, `number`, `boolean`, etc.) são comparados pelo **valor**.
 
 ```js
-10 === 10;           // true
+10 === 10; // true
 "React" === "React"; // true
 ```
 
@@ -153,7 +154,7 @@ Para o React, isso significa que o valor mudou. Já quando reutilizamos a mesma 
 ```jsx
 const user = { name: "Thiago" };
 
-<User user={user} />
+<User user={user} />;
 ```
 
 Todas as renderizações utilizam exatamente o mesmo objeto.

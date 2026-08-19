@@ -11,7 +11,6 @@ export default function RegisterPage() {
   console.log(`Count do render: ${count}`);
   console.log(`newCount do render: ${newCount}`);
 
-
   function increment() {
     console.log(`Count dentro de increment(): ${count}`);
     count = count + 1;

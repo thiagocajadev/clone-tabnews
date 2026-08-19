@@ -26,7 +26,8 @@ export default function RegisterPage() {
 ```
 
 Ao executar o código acima o React vai devolver um Array:
-```js
+
+```text
 [
   "Valor inicial",
   null
@@ -45,13 +46,13 @@ const [valorAtual, funcaoDeAtualizacao] = useState("Valor inicial");
 // Exemplo: valor atual "newCount" e função "setNewCount"
 const [newCount, setNewCount] = useState(0);
 ```
+
 ### Renderizar vs Pintar
 
 A diferença entre renderizar (atualizar) um componente e pintar (desenhar ele na tela) é sutil mas importante:
 
-* **Renderizar**: Calcula a arvore dos componentes, faz a conciliação com a DOM e atualiza apenas o que precisa
-* **Pintar**: Desenha o componente na tela
-
+- **Renderizar**: Calcula a arvore dos componentes, faz a conciliação com a DOM e atualiza apenas o que precisa
+- **Pintar**: Desenha o componente na tela
 
 # O problema de Closures Obsoletos
 
@@ -67,14 +68,18 @@ Se tivermos por exemplo uma função fora do React que interage apenas com naveg
 
 ```js
 useEffect(() => {
-  console.log("[Effect setup] isso vai ser impresso depois do commit")
+  console.log("[Effect setup] isso vai ser impresso depois do commit");
 
   return () => {
-    console.log("[Effect cleanup] isso vai ser impresso antes do proximo setup")
+    console.log(
+      "[Effect cleanup] isso vai ser impresso antes do proximo setup",
+    );
   };
 });
 ```
+
 Esse hook do React permite fazer duas coisas:
+
 - Executar código "depois" do commit
 - Limpar o efeito "antes" do proximo commit
 
@@ -82,25 +87,22 @@ Vamos a mais um exemplo:
 
 ```js
 useEffect(() => {
-    const intervalId = setInterval(function () {
-        console.log(`[setInterval] count: ${count} | newCount: ${newCount}`);
-        console.log("");
-    }, 2000);
+  const intervalId = setInterval(function () {
+    console.log(`[setInterval] count: ${count} | newCount: ${newCount}`);
+    console.log("");
+  }, 2000);
 
-    return () => {
-        console.log(
-            "[effect cleanup] Isso vai ser impresso antes do próximo effect"
-        );
+  return () => {
+    console.log(
+      "[effect cleanup] Isso vai ser impresso antes do próximo effect",
+    );
 
-        console.log(
-            `[effect cleanup] count: ${count} | newCount: ${newCount}`
-        );
+    console.log(`[effect cleanup] count: ${count} | newCount: ${newCount}`);
 
-        clearInterval(intervalId);
-    };
+    clearInterval(intervalId);
+  };
 }, [newCount]);
 ```
-
 
 O ponto principal é entender que o `useEffect` está **amarrado ao valor de `newCount`**:
 

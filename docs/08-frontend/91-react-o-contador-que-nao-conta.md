@@ -2,11 +2,14 @@
 
 Vamos então usar de trilha a criação da página pra rota `/cadastro`.
 
-```js
+```text
 // nova rota criada em pt-BR mesmo, pois é o caminho que será exibido pro usuário final
 pages/cadastro/index.js
+```
 
-// e dentrodo arquivo temos
+E dentro do arquivo temos:
+
+```js
 export default function RegisterPage() {
   return <h1>Página de Cadastro</h1>;
 }
@@ -27,12 +30,11 @@ export default function RegisterPage() {
 
 ![alt text](img/render-register-page.png)
 
-
 O `console.log` foi executado porque o React chamou a função `RegisterPage()`. Essa função representa o componente e será executada novamente sempre que o React precisar renderizá-lo.
 
 Isso acontece porque, no React, renderizar um componente significa **executar sua função novamente** para descobrir qual deve ser a próxima interface.
 
-Após essa execução, o React compara o resultado da renderização atual com o da renderização anterior. Esse processo de comparação é conhecido como **reconciliação (reconciliation)** e é realizado pela arquitetura moderna do React, chamada **Fiber Tree** (antigamente era comum explicar esse processo apenas como uma comparação do *Virtual DOM*).
+Após essa execução, o React compara o resultado da renderização atual com o da renderização anterior. Esse processo de comparação é conhecido como **reconciliação (reconciliation)** e é realizado pela arquitetura moderna do React, chamada **Fiber Tree** (antigamente era comum explicar esse processo apenas como uma comparação do _Virtual DOM_).
 
 Com essa comparação, o React identifica exatamente o que mudou e aplica apenas as alterações necessárias ao DOM real, tornando as atualizações mais eficientes.
 
@@ -68,12 +70,12 @@ function ComponenteB() {
   return <h1>Componente B</h1>;
 }
 ```
+
 O que temos então é essa estrutura
 
 ![Árvore simples](img/arvore-componentes-simples.png)
 
 Agora o react precisa de um gatilho pra se mexer. O gatilho inicial é o boot(carregamento) da aplicação.
-
 
 ### Mais um pouco sobre Closures do JavaScript
 
